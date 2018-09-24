@@ -21,4 +21,10 @@ const app = new Vue({
     el: '#app'
 });
 
-var Chart = require('chart.js')
+var Chart = require('chart.js');
+
+require('gijgo/js/gijgo.min');
+
+$("textarea").editor({
+    uiLibrary: 'bootstrap'
+});

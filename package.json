@@ -21,6 +21,8 @@
     },
     "dependencies": {
         "chart.js": "^2.7.2",
+        "font-awesome": "^4.7.0",
+        "gijgo": "^1.9.10",
         "scss": "^0.2.4"
     }
 }

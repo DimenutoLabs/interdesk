@@ -1,0 +1,82 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{ __('messages.tickets') }} / {{ __('messages.new') }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 margin-top-30">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="small_subject">{{ __('messages.ticket_small_subject') }} <b class="color-red">*</b></label>
+                            <input type="text" class="form-control" id="small_subject" name="small_subject" placeholder="{{ __('messages.enter_subject') }}">
+                            <small id="subjectHelp" class="form-text text-muted">{{ __('messages.ticket_small_subject_description') }}</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">{{ __('messages.ticket_subject') }}</label>
+                            <input type="text" class="form-control" id="subject" placeholder="{{ __('messages.enter_subject') }}">
+                            <small id="subjectHelp" class="form-text text-muted">{{ __('messages.ticket_subject_description') }}</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prior">{{ __('messages.prior') }} <b class="color-red">*</b></label>
+                                    <input type="text" class="form-control" id="prior" name="prior" placeholder="{{ __('messages.choose_prior') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="department">{{ __('messages.department') }}</label>
+                                    <input type="text" class="form-control" id="department" name="department" placeholder="{{ __('messages.choose_department') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prior">{{ __('messages.accept_date') }}</label>
+                                    <input type="text" class="form-control" id="accept_date" name="accept_date" placeholder="{{ __('messages.date_placeholder') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prior">{{ __('messages.estimated_time') }}</label>
+                                    <input type="text" class="form-control" id="estimated_time" name="estimated_time" placeholder="{{ __('messages.time_placeholder') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assigned_to">{{ __('messages.assigned_to') }}</label>
+                            <input type="text" class="form-control" id="assigned_to" name="assigned_to" placeholder="{{ __('messages.choose_assignment') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observers">{{ __('messages.observers') }}</label>
+                            <input type="text" class="form-control" id="observers" name="observers" placeholder="{{ __('messages.choose_observers') }}">
+                        </div>
+
+                        <div>
+                            <div class="form-group">
+                                <label for="conteudo">{{ __('messages.content') }} <b class="color-red">*</b></label>
+                                <textarea name="conteudo" id="conteudo"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary"><i class="fa fa-check fa-fw"></i> {{ __('messages.create_new_ticket') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
