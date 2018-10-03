@@ -29,9 +29,9 @@ Route::group([
     "middleware" => "auth",
 ], function(Router $route) {
 
-    $route->get('/dashboard', 'DashboardController@index');
-    $route->get('/ticket', 'TicketController@index');
-    $route->get('/ticket/create', 'TicketController@create');
-    $route->get('/ticket/{id}/edit', 'TicketController@edit');
+    $route->get('/dashboard', 'DashboardController@index')->name('dashboard');
+    $route->get('/ticket', 'TicketController@index')->name('ticket.home');
+    $route->get('/ticket/create', 'TicketController@create')->name('ticket.create');
+    $route->get('/ticket/{id}/edit', 'TicketController@edit')->name('ticket.edit');
 
 });
