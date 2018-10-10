@@ -7,24 +7,24 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
+//
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+//
+// const app = new Vue({
+//     el: '#app'
+// });
 
 var Chart = require('chart.js');
 
 require('gijgo/js/gijgo.min');
 
-$("textarea").editor({
-    uiLibrary: 'bootstrap'
-});
+require('jquery-mask-plugin/src/jquery.mask');
+require('jquery-ui/ui/widgets/datepicker');
+require('jquery-ui/ui/i18n/datepicker-pt-BR');

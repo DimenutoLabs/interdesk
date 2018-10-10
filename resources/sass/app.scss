@@ -1,6 +1,11 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+//@font-face {
+//  font-family: 'Open Sans';
+//  src: url('../fonts/nunito.tff');
+//}
 
 // Variables
 @import 'variables';
@@ -11,6 +16,7 @@
 @import '~font-awesome/scss/font-awesome';
 
 @import url('~gijgo/css/gijgo.min.css');
+@import url('~jquery-ui/themes/base/all.css');
 
 .navbar-laravel {
   background-color: #fff;

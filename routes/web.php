@@ -35,3 +35,6 @@ Route::group([
     $route->get('/ticket/{id}/edit', 'TicketController@edit')->name('ticket.edit');
 
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

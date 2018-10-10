@@ -43,14 +43,24 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="prior">{{ __('messages.accept_date') }}</label>
-                                    <input type="text" class="form-control" id="accept_date" name="accept_date" placeholder="{{ __('messages.date_placeholder') }}">
+                                    <label for="accept_date">{{ __('messages.accept_date') }}</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control date datepicker" id="accept_date" name="accept_date">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text" data-focus-to="accept_date"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="prior">{{ __('messages.estimated_time') }}</label>
-                                    <input type="text" class="form-control" id="estimated_time" name="estimated_time" placeholder="{{ __('messages.time_placeholder') }}">
+                                    <label for="estimated_time">{{ __('messages.estimated_time') }}</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control time" id="estimated_time" name="estimated_time">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text" data-focus-to="estimated_time"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,4 +89,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('footer-js')
+    <script>
+        $('.input-group-text').click(function() { $('#' + $(this).attr('data-focus-to') ).focus(); });
+    </script>
 @endsection

@@ -10,14 +10,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('header-js')
 </head>
 <body>
     <div id="app">
@@ -52,7 +49,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/ticket/1/edit"><i class="fa fa-edit fa-fw"></i> Chamado</a>
-                            </li
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fa fa-user-circle fa-fw"></i> <span class="caret"></span>
@@ -80,5 +77,9 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/footer.js') }}" ></script>
+    @yield('footer-js')
 </body>
 </html>
