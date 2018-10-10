@@ -17,6 +17,7 @@
 
 @import url('~gijgo/css/gijgo.min.css');
 @import url('~jquery-ui/themes/base/all.css');
+@import url('~select2/dist/css/select2.css');
 
 .navbar-laravel {
   background-color: #fff;
@@ -107,4 +108,18 @@
             transparent calc(50% + 0.81px),
             transparent 100%);
   }
+}
+
+
+/* Make Select2 boxes match Bootstrap3 heights: */
+.select2-selection__rendered {
+  line-height: 38px !important;
+}
+
+.select2-selection {
+  height: 38px !important;
+}
+
+.select2-selection__arrow {
+  height: 38px !important;
 }

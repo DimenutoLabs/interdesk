@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 225);
+/******/ 	return __webpack_require__(__webpack_require__.s = 226);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 225:
+/***/ 226:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(226);
+module.exports = __webpack_require__(227);
 
 
 /***/ }),
 
-/***/ 226:
+/***/ 227:
 /***/ (function(module, exports) {
 
 $('.date').mask("00/00/0000", { clearIfNotMatch: true, placeholder: "__ /__ /____" });
@@ -81,6 +81,9 @@ $('.time').mask("00:00", { clearIfNotMatch: true, placeholder: "__ : __" });
 $.datepicker.setDefaults($.extend({ 'dateFormat': 'dd/mm/yy' }, $.datepicker.regional['pt-BR']));
 $('.datepicker').datepicker();
 $("textarea").editor({ uiLibrary: 'bootstrap' });
+$("select").select2({
+    adaptContainerCssClass: "educlass"
+});
 
 /***/ })
 

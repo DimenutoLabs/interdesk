@@ -25,6 +25,7 @@
         "gijgo": "^1.9.10",
         "jquery-mask-plugin": "^1.14.15",
         "jquery-ui": "^1.12.1",
-        "scss": "^0.2.4"
+        "scss": "^0.2.4",
+        "select2": "^4.0.6-rc.1"
     }
 }

@@ -34,6 +34,9 @@ Route::group([
     $route->get('/ticket/create', 'TicketController@create')->name('ticket.create');
     $route->get('/ticket/{id}/edit', 'TicketController@edit')->name('ticket.edit');
 
+
+    $route->post('/ticket', 'TicketController@save')->name('ticket.save');
+
 });
 Auth::routes();
 
