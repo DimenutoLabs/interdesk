@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DateHelpers;
+use App\Models\Message;
 use App\Models\Prior;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -20,7 +22,9 @@ class TicketController extends Controller
     }
 
     public function edit($id) {
-        return view('tickets.form_edit');
+        $ticket = Ticket::find($id);
+        return view('tickets.form_edit')
+            ->with('ticket', $ticket);
     }
 
     public function save(Request $request) {
@@ -29,13 +33,25 @@ class TicketController extends Controller
         $ticket->user_id = $request->user()->id;
         $ticket->small_title = $request->get('small_title');
         $ticket->title = $request->get('title');
-        $ticket->limit_date = $request->get('limit_date');
+        $ticket->limit_date = DateHelpers::brToSql($request->get('limit_date'));
         $ticket->estimated_time = $request->get('estimated_time');
         $ticket->content = $request->get('content');
+        $ticket->prior_id = $request->get('prior');
         $ticket->save();
 
-        return $ticket;
+        return redirect( route('ticket.edit', [$ticket->id]) );
 
+    }
+
+    public function update(Request $request, $id) {
+        $ticket = Ticket::findOrFail($id);
+        $message = new Message();
+        $message->user_id = $request->user()->id;
+        $message->ticket_id = $id;
+        $message->message = $request->reply_content;
+        $message->save();
+
+        return redirect( route('ticket.edit', [$ticket->id]) );
     }
 
 }

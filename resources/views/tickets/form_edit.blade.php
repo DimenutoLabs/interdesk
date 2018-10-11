@@ -14,16 +14,21 @@
             <div class="col-12 margin-top-30">
                 <div class="card">
                     <div class="card-header">
-                        <div><i class="fa fa-user fa-fw"></i> Criador do Ticket</div>
-                        <div><i class="fa fa-envelope fa-fw"></i> emaildocriador@email.com</div>
-                        <div class="color-gray"><span class="font-10">12/09/2018 @ 22:01:01</span> </div>
+                        <div class="float-left">
+                            <div><i class="fa fa-user fa-fw"></i> {{ $ticket->user->name }}</div>
+                            <div><i class="fa fa-envelope fa-fw"></i> {{ $ticket->user->email }}</div>
+                            <div class="color-gray"><span class="font-10">{{ $ticket->created_at->format('d/m/Y @ H:i:s') }}</span> </div>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn btn-primary btn-sm">{{ __('messages.action') }}&nbsp;&nbsp;&nbsp;<i class="dropdown-toggle"></i> </button>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <h6><i class="fa fa-comment-o fa-fw"></i> TITULO RESUMIDO</h6>
-                        <div class="font-14 color-gray">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto blanditiis consequatur ipsam saepe similique sint.</div>
+                        <h6><i class="fa fa-comment-o fa-fw"></i> {{ mb_strtoupper($ticket->small_title) }}</h6>
+                        <div class="font-14 color-gray">{{ $ticket->title }}</div>
                         <hr>
                         <div>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto doloribus ducimus ea iste libero maiores minima. Accusantium, architecto atque commodi consectetur corporis cumque delectus est illo minima molestiae necessitatibus nostrum nulla obcaecati odio pariatur quidem reprehenderit repudiandae saepe, sapiente, voluptates. Eius facere id laborum perspiciatis quaerat similique vero voluptatem! Enim ex explicabo illo incidunt itaque iure labore officia perferendis ratione?
+                            <?php echo $ticket->content; ?>
                         </div>
                     </div>
                 </div>
@@ -35,82 +40,78 @@
                         <div><i class="fa fa-comment-o fa-fw"></i> {{ __('messages.ticket_messages') }}</div>
                     </div>
                     <div class="card-body">
-                        <div class="middle-line">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="alert alert-success">
-                                        <i class="fa fa-user fa-fw"></i> Eu: <small>(29/09/2018 @ 18:10:16)</small>
-                                        <hr>
-                                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, suscipit.</div>
-                                    </div>
-                                </div>
-                            </div>
+                        @if ( count($ticket->messages) )
 
-                            <div class="row">
-                                <div class="offset-md-6 col-md-6">
-                                    <div class="alert alert-info">
-                                        <i class="fa fa-user fa-fw"></i> Coleguinha: <small>(29/09/2018 @ 18:10:16)</small>
-                                        <hr>
-                                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, dolore.</div>
-                                        <hr>
+                            <div class="middle-line">
+
+                                @foreach( $ticket->messages as $message )
+                                    @if ( $message->user_id == \Auth::user()->id )
                                         <div class="row">
-                                            <div class="col-sm-2 col-3">
-                                                <img src="https://picsum.photos/200/300/?random&1=1" style="width: 100%;">
-                                            </div>
-                                            <div class="col-sm-2 col-3">
-                                                <img src="https://picsum.photos/200/300/?random&2=2" style="width: 100%;">
-                                            </div>
-                                            <div class="col-sm-2 col-3">
-                                                <img src="https://picsum.photos/200/300/?random&3=3" style="width: 100%;">
+                                            <div class="col-md-6">
+                                                <div class="alert alert-success">
+                                                    <i class="fa fa-user fa-fw"></i> {{ __('messages.me') }}: <small>({{ $message->created_at->format('d/m/Y @ H:i:s') }})</small>
+                                                    <hr>
+                                                    <div>
+                                                        <?php echo $message->message; ?>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="offset-md-6 col-md-6">
-                                    <div class="alert alert-info">
-                                        <i class="fa fa-user fa-fw"></i> Coleguinha: <small>(29/09/2018 @ 18:10:16)</small>
-                                        <hr>
-                                        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, dolore.</div>
-                                        <hr>
+                                    @else
                                         <div class="row">
-                                            <div class="col-sm-2 col-3">
-                                                <img src="https://picsum.photos/200/300/?random&4=1" style="width: 100%;">
-                                            </div>
-                                            <div class="col-sm-2 col-3">
-                                                <img src="https://picsum.photos/200/300/?random&5=2" style="width: 100%;">
-                                            </div>
-                                            <div class="col-sm-2 col-3">
-                                                <img src="https://picsum.photos/200/300/?random&6=3" style="width: 100%;">
+                                            <div class="offset-md-6 col-md-6">
+                                                <div class="alert alert-info">
+                                                    <i class="fa fa-user fa-fw"></i> Coleguinha: <small>(29/09/2018 @ 18:10:16)</small>
+                                                    <hr>
+                                                    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, dolore.</div>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-sm-2 col-3">
+                                                            <img src="https://picsum.photos/200/300/?random&1=1" style="width: 100%;">
+                                                        </div>
+                                                        <div class="col-sm-2 col-3">
+                                                            <img src="https://picsum.photos/200/300/?random&2=2" style="width: 100%;">
+                                                        </div>
+                                                        <div class="col-sm-2 col-3">
+                                                            <img src="https://picsum.photos/200/300/?random&3=3" style="width: 100%;">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    @endif
+                                @endforeach
+
                             </div>
 
-                        </div>
+                        @else
+                            <div class="text-center padding-full-10">
+                                <h3 class="color-gray">{{ __('messages.ticket_no_messages') }} <i class="fa fa-thumbs-o-up fa-fw"></i></h3>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
 
             <div class="col-12 margin-top-30">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fa fa-reply fa-fw"></i> {{ __('messages.reply_ticket') }}
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="conteudo">{{ __('messages.message') }} <b class="color-red">*</b></label>
-                            <textarea name="conteudo" id="conteudo"></textarea>
+                <form method="post" action=" {{ route('ticket.update', [$ticket->id]) }}">
+                    {{ csrf_field() }}
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-reply fa-fw"></i> {{ __('messages.reply_ticket') }}
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="reply_content">{{ __('messages.message') }} <b class="color-red">*</b></label>
+                                <textarea name="reply_content" id="reply_content"></textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary"><i class="fa fa-check fa-fw"></i> {{ __('messages.reply_ticket') }}</button>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary"><i class="fa fa-check fa-fw"></i> {{ __('messages.reply_ticket') }}</button>
-                    </div>
-                </div>
+                </form>
             </div>
 
             <div class="col-12 margin-top-30">

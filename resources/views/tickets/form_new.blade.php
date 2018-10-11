@@ -31,8 +31,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="prior">{{ __('messages.prior') }} <b class="color-red">*</b></label>
-                                        <select class="form-control" id="prior" name="prior">
-                                            <option> -- </option>
+                                        <select class="form-control selectpicker" id="prior" name="prior">
                                             @foreach( $priors as $prior )
                                                 <option value="{{ $prior->id }}">{{ $prior->name }}</option>
                                             @endforeach
@@ -75,12 +74,26 @@
 
                             <div class="form-group">
                                 <label for="assigned_to">{{ __('messages.assigned_to') }}</label>
-                                <input type="text" class="form-control" id="assigned_to" name="assigned_to" placeholder="{{ __('messages.choose_assignment') }}">
+                                <select class="form-control selectpicker" id="assigned_to" name="assigned_to">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="observers">{{ __('messages.observers') }}</label>
-                                <input type="text" class="form-control" id="observers" name="observers" placeholder="{{ __('messages.choose_observers') }}">
+                                <select type="text" class="form-control selectpicker" id="observers" name="observers" multiple>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
                             </div>
 
                             <div>

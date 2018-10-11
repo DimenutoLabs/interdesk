@@ -36,6 +36,7 @@ Route::group([
 
 
     $route->post('/ticket', 'TicketController@save')->name('ticket.save');
+    $route->post('/ticket/{id}', 'TicketController@update')->name('ticket.update');
 
 });
 Auth::routes();

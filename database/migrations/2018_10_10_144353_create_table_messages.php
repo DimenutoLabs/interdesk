@@ -16,14 +16,16 @@ class CreateTableMessages extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('user_id')->unsigned();
             $table->integer('ticket_id')->unsigned();
             $table->longText('message');
-            $table->integer('attachment_id')->unsigned();
+            $table->integer('attachment_id')->unsigned()->nullable();
 
 
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('user_id', 'message_fk_user')->references('id')->on('users');
             $table->foreign('ticket_id', 'message_fk_ticket')->references('id')->on('tickets');
             $table->foreign('attachment_id', 'message_fk_attachment')->references('id')->on('attachments');
         });

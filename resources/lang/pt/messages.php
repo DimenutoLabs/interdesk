@@ -30,9 +30,13 @@ return [
     'reply_ticket' => 'Responder chamado',
     'ticket_history' => 'Histórico do chamado',
     'ticket_messages' => 'Mensagens do chamado',
+    'ticket_no_messages' => 'Não há mensagens para esse ticket',
 
     'accept_date' => 'Data limite para aceitar',
     'date_placeholder' => '__ / __ / ____',
     'estimated_time' => 'Tempo estimado para a tarefa',
     'time_placeholder' => '__ : __',
+
+    'me' => 'Eu',
+    'action' => 'Ações'
 ];
