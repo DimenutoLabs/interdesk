@@ -45,10 +45,7 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="/ticket/create"><i class="fa fa-plus-circle fa-fw"></i> Chamado</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/ticket/1/edit"><i class="fa fa-edit fa-fw"></i> Chamado</a>
+                                <a class="nav-link" href="{{ route('ticket.create') }}"><i class="fa fa-plus-circle fa-fw"></i> Chamado</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -16,4 +16,12 @@ class Ticket extends Model
         return $this->hasMany(Message::class);
     }
 
+    public function prior() {
+        return $this->BelongsTo(Prior::class);
+    }
+
+    public function department() {
+        return $this->BelongsTo(Department::class);
+    }
+
 }

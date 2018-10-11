@@ -20,7 +20,18 @@
                             <div class="color-gray"><span class="font-10">{{ $ticket->created_at->format('d/m/Y @ H:i:s') }}</span> </div>
                         </div>
                         <div class="float-right">
-                            <button class="btn btn-primary btn-sm">{{ __('messages.action') }}&nbsp;&nbsp;&nbsp;<i class="dropdown-toggle"></i> </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ __('messages.action') }}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -62,9 +73,12 @@
                                         <div class="row">
                                             <div class="offset-md-6 col-md-6">
                                                 <div class="alert alert-info">
-                                                    <i class="fa fa-user fa-fw"></i> Coleguinha: <small>(29/09/2018 @ 18:10:16)</small>
+                                                    <i class="fa fa-user fa-fw"></i> {{ $message->user->name }}: <small>({{ $message->created_at->format('d/m/Y @ H:i:s') }})</small>
                                                     <hr>
-                                                    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, dolore.</div>
+                                                    <div>
+                                                        <?php echo $message->message; ?>
+                                                    </div>
+                                                    @if ( $message->attachment_id )
                                                     <hr>
                                                     <div class="row">
                                                         <div class="col-sm-2 col-3">
@@ -77,6 +91,7 @@
                                                             <img src="https://picsum.photos/200/300/?random&3=3" style="width: 100%;">
                                                         </div>
                                                     </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

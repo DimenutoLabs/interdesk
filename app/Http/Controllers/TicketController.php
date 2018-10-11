@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DateHelpers;
+use App\Models\Department;
 use App\Models\Message;
 use App\Models\Prior;
 use App\Models\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -17,12 +19,18 @@ class TicketController extends Controller
 
     public function create() {
         $priors = Prior::all();
+        $users = User::where('id', '!=', \Auth::user()->id )->get();
+        $departments = Department::all();
+
         return view('tickets.form_new')
-            ->with('priors', $priors);
+            ->with('priors', $priors)
+            ->with('users', $users)
+            ->with('departments', $departments);
     }
 
     public function edit($id) {
         $ticket = Ticket::find($id);
+
         return view('tickets.form_edit')
             ->with('ticket', $ticket);
     }

@@ -8,7 +8,12 @@ $.datepicker.setDefaults(
 );
 $('.datepicker').datepicker();
 $("textarea").editor({uiLibrary: 'bootstrap'});
-$(".selectpicker").select2();
+$(".selectpicker").select2({
+    allowClear: true,
+    placeholder: '---'
+});
 $('.selectpicker-multiple').select2({
+    allowClear: true,
+    placeholder: '---',
     tags: true
 });

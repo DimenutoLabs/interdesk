@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,19 +16,27 @@ class PriorSeeder extends Seeder
         DB::table('priors')->insert(
             [
                 'name' => 'Alta',
-                'color' => '#D42449',
+                'background' => '#D42449',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         );
         DB::table('priors')->insert(
             [
                 'name' => 'Média',
-                'color' => '#B4A7BE',
+                'background' => '#B4A7BE',
+                'color' => '#FFF',
+                'default' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         );
         DB::table('priors')->insert(
             [
                 'name' => 'Baixa',
-                'color' => '#CCECF2',
+                'background' => '#CCECF2',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         );
     }

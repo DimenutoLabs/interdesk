@@ -33,7 +33,7 @@
                                         <label for="prior">{{ __('messages.prior') }} <b class="color-red">*</b></label>
                                         <select class="form-control selectpicker" id="prior" name="prior">
                                             @foreach( $priors as $prior )
-                                                <option value="{{ $prior->id }}">{{ $prior->name }}</option>
+                                                <option value="{{ $prior->id }}" {{ $prior->default ? "selected" : "" }}>{{ $prior->name }}</option>
                                             @endforeach
                                         </select>
                                         {{--<input type="text" class="form-control" id="prior" name="prior" placeholder="{{ __('messages.choose_prior') }}">--}}
@@ -42,7 +42,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="department">{{ __('messages.department') }}</label>
-                                        <input type="text" class="form-control" id="department" name="department" placeholder="{{ __('messages.choose_department') }}">
+                                        <select class="form-control selectpicker" id="department" name="department">
+                                            <option></option>
+                                            @foreach( $departments as $department )
+                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -74,25 +79,20 @@
 
                             <div class="form-group">
                                 <label for="assigned_to">{{ __('messages.assigned_to') }}</label>
-                                <select class="form-control selectpicker" id="assigned_to" name="assigned_to">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                                <select class="form-control selectpicker same_value" data-same="user" id="assigned_to" name="assigned_to" >
+                                    <option></option>
+                                    @foreach( $users as $user )
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="observers">{{ __('messages.observers') }}</label>
-                                <select type="text" class="form-control selectpicker" id="observers" name="observers" multiple>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
+                                <select type="text" class="form-control selectpicker same_value" data-same="user" id="observers" name="observers" multiple>
+                                    @foreach( $users as $user )
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -116,5 +116,24 @@
 @section('footer-js')
     <script>
         $('.input-group-text').click(function() { $('#' + $(this).attr('data-focus-to') ).focus(); });
+
+        $('.same_value').on('change', function() {
+            let self = $(this);
+            var values = ($(this).val() + "").split(",");
+            var same = $(this).attr('data-same');
+            $('.same_value').each( function() {
+                if ( self.html() !== $(this).html() ) {
+                    $(this).children().prop('disabled', false);
+                    for ( value in values ) {
+                        console.log( values[value] );
+                        $(this).find('option[value="' + values[value] + '"]').prop('disabled', true);
+                    }
+                }
+            })
+            $('.selectpicker').select2({
+                allowClear: true,
+                placeholder: '---'
+            });
+        });
     </script>
 @endsection
