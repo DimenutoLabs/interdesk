@@ -24,6 +24,8 @@ class CreateTableTickets extends Migration
             $table->date('limit_date')->nullable();
             $table->string('estimated_time')->nullable();
             $table->longText('content');
+            $table->integer('status_id')->unsigned();
+            $table->integer('agent_user_id')->nullable()->unsigned();
 
             $table->timestamps();
             $table->softDeletes();
@@ -31,6 +33,8 @@ class CreateTableTickets extends Migration
             $table->foreign('prior_id', 'ticket_fk_prior')->references('id')->on('priors');
             $table->foreign('department_id', 'ticket_fk_department')->references('id')->on('departments');
             $table->foreign('user_id', 'ticket_fk_user')->references('id')->on('users');
+            $table->foreign('agent_user_id', 'ticket_fk_user__agent')->references('id')->on('users');
+            $table->foreign('status_id', 'ticket_fk_status')->references('id')->on('status');
         });
     }
 

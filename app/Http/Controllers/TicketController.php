@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\DateHelpers;
 use App\Models\Department;
 use App\Models\Message;
+use App\Models\Observer;
 use App\Models\Prior;
+use App\Models\Status;
 use App\Models\Ticket;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,13 +32,16 @@ class TicketController extends Controller
 
     public function edit($id) {
         $ticket = Ticket::find($id);
+        $status = Status::all();
 
         return view('tickets.form_edit')
-            ->with('ticket', $ticket);
+            ->with('ticket', $ticket)
+            ->with('status', $status);
     }
 
     public function save(Request $request) {
 
+        \DB::beginTransaction();
         $ticket = new Ticket();
         $ticket->user_id = $request->user()->id;
         $ticket->small_title = $request->get('small_title');
@@ -45,7 +50,21 @@ class TicketController extends Controller
         $ticket->estimated_time = $request->get('estimated_time');
         $ticket->content = $request->get('content');
         $ticket->prior_id = $request->get('prior');
+        $ticket->status_id = Status::where('default', true)->first()->id;
+        if ( $assigned = $request->get('assigned_to') ) {
+            $ticket->agent_user_id = $assigned;
+        }
         $ticket->save();
+
+        if ( $observers = explode(",", $request->get('observers')) ) {
+            foreach( $observers as $user ) {
+                $observer = new Observer();
+                $observer->ticket_id = $ticket->id;
+                $observer->user_id = $user;
+                $observer->save();
+            }
+        }
+        \DB::commit();
 
         return redirect( route('ticket.edit', [$ticket->id]) );
 

@@ -9,7 +9,19 @@ class DashboardController extends Controller
 {
 
     public function index() {
-        $tickets = Ticket::where('user_id', \Auth::user()->id )->get();
+
+        $user = \Auth::user();
+        $tickets = Ticket::select('tickets.*')
+            ->leftJoin('observers', 'observers.ticket_id', 'tickets.id')
+            ->where('observers.user_id', $user->id)
+            ->orWhere('tickets.user_id', $user->id)
+            ->orWhere('tickets.agent_user_id', $user->id)
+            ->get();
+
+        if (\Auth::user()->is_admin) {
+            $tickets = Ticket::all();
+        }
+
         return view('dashboard.index')
             ->with('tickets', $tickets);
     }

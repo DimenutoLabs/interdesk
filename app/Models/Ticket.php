@@ -9,7 +9,11 @@ class Ticket extends Model
 {
 
     public function user() {
-        return $this->BelongsTo(User::class);
+        return $this->BelongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function agent() {
+        return $this->BelongsTo(User::class, 'agent_user_id', 'id');
     }
 
     public function messages() {
@@ -22,6 +26,10 @@ class Ticket extends Model
 
     public function department() {
         return $this->BelongsTo(Department::class);
+    }
+
+    public function  status() {
+        return $this->belongsTo(Status::class);
     }
 
 }

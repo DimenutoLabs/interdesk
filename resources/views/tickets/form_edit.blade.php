@@ -22,14 +22,13 @@
                         <div class="float-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ __('messages.action') }}
+                                    {{ $ticket->status->name }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
+                                    @foreach ($status as $stat )
+                                        <a class="dropdown-item" href="#">{{ $stat->action }} {{ __('messages.add_ticket') }}</a>
+                                        {{--<div class="dropdown-divider"></div>--}}
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

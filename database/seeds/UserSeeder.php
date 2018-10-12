@@ -15,36 +15,37 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert(
             [
-                'name' => 'Luiz Eduardo Campos Soares',
-                'email' => 'l.eduardosoares@gmail.com',
-                'password' => '$2y$10$LJHEy0cfkyj5KEpHVhrdiefWSfuQ4x1e81MEoQvglEY3WEU1fYcWK',
+                'name' => 'John Doe',
+                'email' => 'firstuser@gmail.com',
+                'password' => \Hash::make('123456'),
+                'is_admin' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
         DB::table('users')->insert(
             [
-                'name' => 'Mário Alberto',
-                'email' => 'mario.alberto@gmail.com',
-                'password' => '$2y$10$LJHEy0cfkyj5KEpHVhrdiefWSfuQ4x1e81MEoQvglEY3WEU1fYcWK',
+                'name' => 'Charles Albert',
+                'email' => 'seconduser@gmail.com',
+                'password' => \Hash::make('123456'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
         DB::table('users')->insert(
             [
-                'name' => 'Luann Resende',
-                'email' => 'launn.resende@gmail.com',
-                'password' => '$2y$10$LJHEy0cfkyj5KEpHVhrdiefWSfuQ4x1e81MEoQvglEY3WEU1fYcWK',
+                'name' => 'Gregg Swaer',
+                'email' => 'thirduser@gmail.com',
+                'password' => \Hash::make('123456'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
         DB::table('users')->insert(
             [
-                'name' => 'Matheus Resende',
-                'email' => 'matheus.resende@gmail.com',
-                'password' => '$2y$10$LJHEy0cfkyj5KEpHVhrdiefWSfuQ4x1e81MEoQvglEY3WEU1fYcWK',
+                'name' => 'Eduardo Soares',
+                'email' => 'furtyuser@gmail.com',
+                'password' => \Hash::make('123456'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]

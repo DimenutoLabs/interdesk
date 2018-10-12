@@ -107,14 +107,14 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div>#{{ str_pad($ticket->id, 5, "0", STR_PAD_LEFT) }}</div>
-                                                <button class="btn btn-sm" style="background-color: {{ $ticket->prior->color }}">{{ $ticket->prior->name }}</button>
+                                                <button class="btn btn-sm" style="background-color: {{ $ticket->prior->background }}; color: {{ $ticket->prior->color }}">{{ $ticket->prior->name }}</button>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class=""><b>Luiz Eduardo Campos Soares</b></div>
+                                                <div class=""><b>{{ $ticket->agent->name }}</b></div>
                                                 <div><i>{{ $ticket->department ? $ticket->department->name : "----" }}</i></div>
                                             </div>
                                         </div>
