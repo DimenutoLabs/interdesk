@@ -135,42 +135,17 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-hover">
-                            <tr>
-                                <td style="width: 30%">
-                                    <div>23/10/2018 @ 10:00:00</div>
-                                    <div class="font-12 color-gray">Usuário / 192.168.0.1 </div>
-                                </td>
-                                <td style="width: 70%">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A assumenda commodi dolores et eveniet exercitationem explicabo iste nostrum omnis voluptates?
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 30%">
-                                    <div>23/10/2018 @ 10:00:00</div>
-                                    <div class="font-12 color-gray">Usuário / 192.168.0.1 </div>
-                                </td>
-                                <td style="width: 70%">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A assumenda commodi dolores et eveniet exercitationem explicabo iste nostrum omnis voluptates?
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 30%">
-                                    <div>23/10/2018 @ 10:00:00</div>
-                                    <div class="font-12 color-gray">Usuário / 192.168.0.1 </div>
-                                </td>
-                                <td style="width: 70%">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A assumenda commodi dolores et eveniet exercitationem explicabo iste nostrum omnis voluptates?
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 30%">
-                                    <div>23/10/2018 @ 10:00:00</div>
-                                    <div class="font-12 color-gray">Usuário / 192.168.0.1 </div>
-                                </td>
-                                <td style="width: 70%">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A assumenda commodi dolores et eveniet exercitationem explicabo iste nostrum omnis voluptates?
-                                </td>
-                            </tr>
+                            @foreach( $logs as $log )
+                                <tr>
+                                    <td style="width: 30%">
+                                        <div>{{ $log->created_at->format("d/m/Y @ H:i") }}</div>
+                                        <div class="font-12 color-gray">{{ $log->user->name }} / {{ $log->ip }} </div>
+                                    </td>
+                                    <td style="width: 70%">
+                                        {{ $log->message }}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </table>
                     </div>
                 </div>

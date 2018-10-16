@@ -137,7 +137,9 @@
                                     </td>
                                     <td>
                                         <div class="text-center">
-                                            <button class="btn btn-danger btn-sm"><i class="fa fa-exclamation-circle fa-fw"></i> 4</button>
+                                            @if( $number = $ticket->last_actions )
+                                            <button class="btn btn-danger btn-sm"><i class="fa fa-exclamation-circle fa-fw"></i> {{ $number }}</button>
+                                            @endif
                                         </div>
                                     </td>
                                     <td>

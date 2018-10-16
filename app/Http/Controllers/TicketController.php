@@ -9,6 +9,9 @@ use App\Models\Observer;
 use App\Models\Prior;
 use App\Models\Status;
 use App\Models\Ticket;
+use App\Models\TicketLog;
+use App\Models\TicketLogMessage;
+use App\Models\UserTicketAccess;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -34,9 +37,18 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $status = Status::all();
 
+        $access = new UserTicketAccess();
+        $access->user_id = \Auth::user()->id;
+        $access->ticket_id = $id;
+        $access->save();
+
+        $logs = TicketLogMessage::where('ticket_id', $id)
+            ->get();
+
         return view('tickets.form_edit')
             ->with('ticket', $ticket)
-            ->with('status', $status);
+            ->with('status', $status)
+            ->with('logs', $logs);
     }
 
     public function save(Request $request) {
@@ -64,6 +76,16 @@ class TicketController extends Controller
                 $observer->save();
             }
         }
+
+        $message = __('messages.log_ticket_created');
+        $message = str_replace("{%0}", $request->user()->name . "(#" . $request->user()->id . ")", $message);
+        $log = new TicketLogMessage();
+        $log->message = $message;
+        $log->ticket_id = $ticket->id;
+        $log->user_id = $request->user()->id;
+        $log->ip = $request->ip();
+        $log->save();
+
         \DB::commit();
 
         return redirect( route('ticket.edit', [$ticket->id]) );
@@ -71,12 +93,27 @@ class TicketController extends Controller
     }
 
     public function update(Request $request, $id) {
+
+        \DB::beginTransaction();
+
         $ticket = Ticket::findOrFail($id);
         $message = new Message();
         $message->user_id = $request->user()->id;
         $message->ticket_id = $id;
         $message->message = $request->reply_content;
         $message->save();
+
+
+        $message = __('messages.log_ticket_new_message');
+        $message = str_replace("{%0}", $request->user()->name . "(#" . $request->user()->id . ")", $message);
+        $log = new TicketLogMessage();
+        $log->message = $message;
+        $log->ticket_id = $ticket->id;
+        $log->user_id = $request->user()->id;
+        $log->ip = $request->ip();
+        $log->save();
+
+        \DB::commit();
 
         return redirect( route('ticket.edit', [$ticket->id]) );
     }

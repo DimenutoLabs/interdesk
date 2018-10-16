@@ -32,4 +32,29 @@ class Ticket extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function getLastActionsAttribute() {
+
+        $access = UserTicketAccess::where('user_id', \Auth::user()->id)
+            ->where('ticket_id', $this->id )
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        $lastAccess = "0000-00-00 00:00:00";
+        $numberOfAlerts = 0;
+
+        if ( $access == null ) {
+            $numberOfAlerts++;
+        } else {
+            $lastAccess = $access->created_at->format('Y-m-d H:i:s');
+        }
+
+        $messages = Message::where('created_at', '>', $lastAccess)
+            ->where('ticket_id', $this->id)
+            ->get();
+
+        $numberOfAlerts += $messages->count();
+
+        return $numberOfAlerts;
+    }
+
 }

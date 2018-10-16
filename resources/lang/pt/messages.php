@@ -38,5 +38,11 @@ return [
     'time_placeholder' => '__ : __',
 
     'me' => 'Eu',
-    'action' => 'Ações'
+    'action' => 'Ações',
+
+    //Ticket Log Messages
+    'log_ticket_created' => '{%0} criou o chamado',
+    'log_ticket_new_message' => '{%0} respondeu o chamado com uma nova mensagem',
+    'log_ticket_upload_file' => '{%0} adicionou um arquivo ao chamado',
+    'log_ticket_status_change' => '{%0} alterou o status do ticket para {%1}',
 ];
