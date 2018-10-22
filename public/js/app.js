@@ -85405,7 +85405,7 @@ gj.editor.methods = {
         }
         $body.attr('contenteditable', true);
         $body.on('keydown', function (e) {
-            var key = e.keyCode || e.charCode;
+            var key = event.keyCode || event.charCode;
             if (gj.editor.events.changing($editor) === false && key !== 8 && key !== 46) {
                 e.preventDefault();
             }

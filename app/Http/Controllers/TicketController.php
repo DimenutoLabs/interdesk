@@ -68,6 +68,8 @@ class TicketController extends Controller
         }
         $ticket->save();
 
+        dd( $request->all() );
+        dd( $request->get('observers') );
         if ( $observers = explode(",", $request->get('observers')) ) {
             foreach( $observers as $user ) {
                 if ( !$user ) {

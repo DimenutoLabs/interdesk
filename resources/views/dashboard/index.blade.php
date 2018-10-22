@@ -270,7 +270,7 @@
         @endforeach
 
         var sendRate = function(id, value) {
-            $.get('{{ route('ticket.rate', $ticket->id) }}/' + value)
+            $.get('/ticket/' + id + '/rate/' + value)
                 .fail(function(e) {
                     new Noty({
                         text: "Não foi possível enviar a avaliação, tente novamente mais tarde, ou entre em contato com o administrador",

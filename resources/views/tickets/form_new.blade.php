@@ -94,8 +94,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="observers">{{ __('messages.observers') }}</label>
-                                <select type="text" class="form-control selectpicker same_value" data-same="user" id="observers" name="observers" multiple>
+                                <label for="observers[]">{{ __('messages.observers') }}</label>
+                                <select type="text" class="form-control selectpicker same_value" data-same="user" id="observers[]" name="observers[]" multiple>
                                     @foreach( $users as $user )
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
@@ -125,22 +125,32 @@
         $('.input-group-text').click(function() { $('#' + $(this).attr('data-focus-to') ).focus(); });
 
         $('.same_value').on('change', function() {
-            var self = $(this);
-            var values = ($(this).val() + "").split(",");
-            var same = $(this).attr('data-same');
+            var values = [];
+            $('.same_value[data-same="' + $(this).attr('data-same') + '"]').each( function() {
+                var currentValues = $(this).val()
+                if ( typeof currentValues === "object" ) {
+                    values = values.concat(currentValues)
+                } else {
+                    if ( currentValues !== "" ) {
+                        values.push(currentValues);
+                    }
+                }
+            });
+
+            var selfSelect = $(this);
             $('.same_value').each( function() {
-                if ( self.html() !== $(this).html() ) {
+                if ( selfSelect.html() !== $(this).html() ) {
                     $(this).children().prop('disabled', false);
                     for ( value in values ) {
-                        console.log( values[value] );
                         $(this).find('option[value="' + values[value] + '"]').prop('disabled', true);
                     }
                 }
-            })
+            });
+            $('.selectpicker').destroy();
             $('.selectpicker').select2({
                 allowClear: true,
                 placeholder: '---'
-            });
+            });;
         });
     </script>
 @endsection
