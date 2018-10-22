@@ -25,10 +25,15 @@
                                     {{ $ticket->status->name }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    @foreach ($status as $stat )
-                                        <a class="dropdown-item" href="#">{{ $stat->action }} {{ __('messages.add_ticket') }}</a>
-                                        {{--<div class="dropdown-divider"></div>--}}
-                                    @endforeach
+                                    @if ( $ticket->status->action == __('messages.ticket_action_create') )
+                                        @if ( !$ticket->agent_user_id && $ticket->user_id != \Auth::user()->id )
+                                            <a class="dropdown-item" href="{{ route('ticket.agent.become', $ticket->id) }}">Tornar Responsável</a>
+                                        @endif
+                                        <a class="dropdown-item" href="{{ route('ticket.close', $ticket->id) }}">Fechar</a>
+                                        <a class="dropdown-item" href="#">Colocar em Espera</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Transferir</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -109,7 +114,7 @@
             </div>
 
             <div class="col-12 margin-top-30">
-                <form method="post" action=" {{ route('ticket.update', [$ticket->id]) }}">
+                <form method="post" id="edit_ticket_form" action=" {{ route('ticket.update', [$ticket->id]) }}">
                     {{ csrf_field() }}
                     <div class="card">
                         <div class="card-header">
@@ -118,11 +123,17 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="reply_content">{{ __('messages.message') }} <b class="color-red">*</b></label>
-                                <textarea name="reply_content" id="reply_content"></textarea>
+                                <textarea name="reply_content" id="reply_content" data-field_name="{{ __('messages.field_edit_ticket_reply_name') }}"></textarea>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary"><i class="fa fa-check fa-fw"></i> {{ __('messages.reply_ticket') }}</button>
+                            <button
+                                    @if ( ($ticket->agent_user_id != \Auth::user()->id && $ticket->user_id != \Auth::user()->id) || $ticket->status->name == __('messages.ticket_status_closed') )
+                                    disabled
+                                    @endif
+                                    class="btn btn-primary">
+                                <i class="fa fa-check fa-fw"></i> {{ __('messages.reply_ticket') }}
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -152,4 +163,21 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('footer-js')
+    <script src="{{ asset('js/editticket.js') }}?v={{ microtime() }}"></script>
+    @if ( ($ticket->agent_user_id != \Auth::user()->id && $ticket->user_id != \Auth::user()->id) || $ticket->status->name == __('messages.ticket_status_closed') )
+    <script>
+        @if ($ticket->status->name == __('messages.ticket_status_closed'))
+        $('div[contenteditable="true"]').css('background', '#EEE').html('Você não pode mais enviar mensagens pois o chamado está fechado.').on('click', function() {
+            $(this).html('Você não pode mais enviar mensagens pois o chamado está fechado.').blur();
+        });
+        @else
+        $('div[contenteditable="true"]').css('background', '#EEE').html('Você não pode enviar mensagens neste ticket pois não é responsável pelo mesmo.').on('click', function() {
+            $(this).html('Você não pode enviar mensagens neste ticket pois não é responsável pelo mesmo.').blur();
+        });
+        @endif
+    </script>
+    @endif
 @endsection

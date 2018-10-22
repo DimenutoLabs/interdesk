@@ -16,8 +16,8 @@ class StatusSeeder extends Seeder
 
         DB::table('status')->insert(
             [
-                'name' => 'Criado',
-                'action' => 'Criar',
+                'name' => __('messages.ticket_status_created'),
+                'action' => __('messages.ticket_action_create'),
                 'default' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -25,8 +25,8 @@ class StatusSeeder extends Seeder
         );
         DB::table('status')->insert(
             [
-                'name' => 'Aberto',
-                'action' => 'Abrir',
+                'name' => __('messages.ticket_status_on_hold'),
+                'action' => __('messages.ticket_action_hold'),
                 'default' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -34,8 +34,8 @@ class StatusSeeder extends Seeder
         );
         DB::table('status')->insert(
             [
-                'name' => 'Atribuido',
-                'action' => 'Atribuir',
+                'name' => __('messages.ticket_status_closed'),
+                'action' => __('messages.ticket_action_close'),
                 'default' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -43,26 +43,8 @@ class StatusSeeder extends Seeder
         );
         DB::table('status')->insert(
             [
-                'name' => 'Espera',
-                'action' => 'Suspender',
-                'default' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]
-        );
-        DB::table('status')->insert(
-            [
-                'name' => 'Fechado',
-                'action' => 'Fechar',
-                'default' => false,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]
-        );
-        DB::table('status')->insert(
-            [
-                'name' => 'Cancelado',
-                'action' => 'Cancelar',
+                'name' => __('messages.ticket_status_expired'),
+                'action' => __('messages.ticket_status_expired'),
                 'default' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

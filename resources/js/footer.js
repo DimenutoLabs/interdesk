@@ -16,4 +16,4 @@ $('.selectpicker-multiple').select2({
     allowClear: true,
     placeholder: '---',
     tags: true
-});
+})

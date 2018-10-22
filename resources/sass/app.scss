@@ -18,6 +18,11 @@
 @import url('~gijgo/css/gijgo.min.css');
 @import url('~jquery-ui/themes/base/all.css');
 @import url('~select2/dist/css/select2.css');
+@import url('~starrr/dist/starrr.css');
+//@import '~toastr';
+@import "~noty/src/noty.scss";
+@import "~noty/src/themes/mint.scss";
+@import "~noty/src/themes/bootstrap-v4.scss";
 
 .navbar-laravel {
   background-color: #fff;
@@ -77,6 +82,7 @@
 .color-white{ color: white }
 .color-gray{ color: gray }
 .color-red{ color: red }
+.color-blue-star{ color: #3490dc }
 
 .font-10{ font-size: 10px }
 .font-12{ font-size: 12px }

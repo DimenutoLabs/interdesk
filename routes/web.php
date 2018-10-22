@@ -33,6 +33,10 @@ Route::group([
     $route->get('/ticket', 'TicketController@index')->name('ticket.home');
     $route->get('/ticket/create', 'TicketController@create')->name('ticket.create');
     $route->get('/ticket/{id}/edit', 'TicketController@edit')->name('ticket.edit');
+    $route->get('/ticket/{id}/become-agent', 'TicketController@becomeAgent')->name('ticket.agent.become');
+    $route->get('/ticket/{id}/transfer-agent', 'TicketController@transferAgent')->name('ticket.agent.transfer');
+    $route->get('/ticket/{id}/close', 'TicketController@close')->name('ticket.close');
+    $route->get('/ticket/{id}/rate/{value?}', 'TicketController@rate')->name('ticket.rate');
 
 
     $route->post('/ticket', 'TicketController@save')->name('ticket.save');

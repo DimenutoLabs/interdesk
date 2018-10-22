@@ -26,6 +26,7 @@ class CreateTableTickets extends Migration
             $table->longText('content');
             $table->integer('status_id')->unsigned();
             $table->integer('agent_user_id')->nullable()->unsigned();
+            $table->smallInteger('rating')->nullable()->unsigned();
 
             $table->timestamps();
             $table->softDeletes();

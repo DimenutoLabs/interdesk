@@ -60,35 +60,59 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 231);
+/******/ 	return __webpack_require__(__webpack_require__.s = 233);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 231:
+/***/ 233:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(232);
+module.exports = __webpack_require__(234);
 
 
 /***/ }),
 
-/***/ 232:
+/***/ 234:
 /***/ (function(module, exports) {
 
-$('.date').mask("00/00/0000", { clearIfNotMatch: true, placeholder: "__ /__ /____" });
-$('.time').mask("00:00", { clearIfNotMatch: true, placeholder: "__ : __" });
-$.datepicker.setDefaults($.extend({ 'dateFormat': 'dd/mm/yy' }, $.datepicker.regional['pt-BR']));
-$('.datepicker').datepicker();
-$("textarea").editor({ uiLibrary: 'bootstrap' });
-$(".selectpicker").select2({
-    allowClear: true,
-    placeholder: '---'
-});
-$('.selectpicker-multiple').select2({
-    allowClear: true,
-    placeholder: '---',
-    tags: true
+var validation = $('#new_ticket_form').validate({
+    errorPlacement: function errorPlacement(error, element) {},
+    invalidHandler: function invalidHandler() {
+        var errors = validation.errorList;
+        var message = [];
+        for (var i in errors) {
+            var elt = $(errors[i].element);
+            message.push(elt.attr('data-field_name'));
+        }
+        if (message.length > 0) {
+            new Noty({
+                text: message.join("<br>"),
+                layout: 'topCenter',
+                timeout: message.length * 1500,
+                progressBar: true,
+                type: 'error',
+                theme: 'bootstrap-v4'
+            }).show();
+        }
+    },
+    ignore: [],
+    rules: {
+        small_title: {
+            required: true
+        },
+        prior: {
+            required: true
+        },
+        department: {
+            required: function required(element) {
+                return $('#assigned_to').val() == "";
+            }
+        },
+        content: {
+            required: true
+        }
+    }
 });
 
 /***/ })

@@ -23,9 +23,11 @@ require('./bootstrap');
 
 var Chart = require('chart.js');
 
-require('gijgo/js/gijgo.min');
+require('gijgo/js/gijgo');
 
 require('jquery-mask-plugin/src/jquery.mask');
 require('jquery-ui/ui/widgets/datepicker');
 require('jquery-ui/ui/i18n/datepicker-pt-BR');
 require('select2/dist/js/select2');
+require('jquery-validation/dist/jquery.validate');
+require('starrr/dist/starrr');

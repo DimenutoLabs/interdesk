@@ -58,7 +58,7 @@ class TicketController extends Controller
         $ticket->user_id = $request->user()->id;
         $ticket->small_title = $request->get('small_title');
         $ticket->title = $request->get('title');
-        $ticket->limit_date = DateHelpers::brToSql($request->get('limit_date'));
+        $ticket->limit_date = $request->get('limit_date') ? DateHelpers::brToSql($request->get('limit_date')) : null;
         $ticket->estimated_time = $request->get('estimated_time');
         $ticket->content = $request->get('content');
         $ticket->prior_id = $request->get('prior');
@@ -70,6 +70,9 @@ class TicketController extends Controller
 
         if ( $observers = explode(",", $request->get('observers')) ) {
             foreach( $observers as $user ) {
+                if ( !$user ) {
+                    continue;
+                }
                 $observer = new Observer();
                 $observer->ticket_id = $ticket->id;
                 $observer->user_id = $user;
@@ -78,7 +81,7 @@ class TicketController extends Controller
         }
 
         $message = __('messages.log_ticket_created');
-        $message = str_replace("{%0}", $request->user()->name . "(#" . $request->user()->id . ")", $message);
+        $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
         $log = new TicketLogMessage();
         $log->message = $message;
         $log->ticket_id = $ticket->id;
@@ -105,7 +108,7 @@ class TicketController extends Controller
 
 
         $message = __('messages.log_ticket_new_message');
-        $message = str_replace("{%0}", $request->user()->name . "(#" . $request->user()->id . ")", $message);
+        $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
         $log = new TicketLogMessage();
         $log->message = $message;
         $log->ticket_id = $ticket->id;
@@ -116,6 +119,80 @@ class TicketController extends Controller
         \DB::commit();
 
         return redirect( route('ticket.edit', [$ticket->id]) );
+    }
+
+    public function becomeAgent(Request $request, $id) {
+
+        \DB::beginTransaction();
+        $ticket = Ticket::findOrFail($id);
+
+        if ( $request->user()->id != $ticket->user_id && !$ticket->agent_user_id ) {
+            $ticket->agent_user_id = $request->user()->id;
+            $ticket->save();
+        }
+
+        $message = __('messages.log_ticket_become_agent');
+        $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
+        $log = new TicketLogMessage();
+        $log->message = $message;
+        $log->ticket_id = $ticket->id;
+        $log->user_id = $request->user()->id;
+        $log->ip = $request->ip();
+        $log->save();
+        \DB::commit();
+
+        return redirect( route('ticket.edit', [$ticket->id]) );
+    }
+
+    public function close(Request $request, $id) {
+
+        \DB::beginTransaction();
+        $ticket = Ticket::findOrFail($id);
+        $status = Status::where('action', __('messages.ticket_action_close'))->first();
+
+        if ( $request->user()->id == $ticket->user_id || $request->user()->id == $ticket->agent_user_id ) {
+            $ticket->status_id = $status->id;
+            $ticket->save();
+        }
+
+        $message = __('messages.log_ticket_status_change');
+        $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
+        $message = str_replace("{%1}", $status->name, $message);
+        $log = new TicketLogMessage();
+        $log->message = $message;
+        $log->ticket_id = $ticket->id;
+        $log->user_id = $request->user()->id;
+        $log->ip = $request->ip();
+        $log->save();
+        \DB::commit();
+
+        return redirect( route('ticket.edit', [$ticket->id]) );
+    }
+
+    public function rate(Request $request, $id, $value = null) {
+
+        \DB::beginTransaction();
+        $ticket = Ticket::findOrFail($id);
+
+        if ( $request->user()->id == $ticket->user_id && $value !== null && $ticket->rating === null ) {
+            $ticket->rating = $value;
+            $ticket->save();
+        } else {
+            abort(400);
+        }
+
+        $message = __('messages.log_ticket_rated');
+        $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
+        $message = str_replace("{%1}", $value, $message);
+        $log = new TicketLogMessage();
+        $log->message = $message;
+        $log->ticket_id = $ticket->id;
+        $log->user_id = $request->user()->id;
+        $log->ip = $request->ip();
+        $log->save();
+        \DB::commit();
+
+        return response("ok");
     }
 
 }

@@ -14,6 +14,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/noty.css') }}" rel="stylesheet">
     @yield('header-js')
 </head>
 <body>
@@ -76,7 +77,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/footer.js') }}" ></script>
+    <script src="{{ asset('js/footer.js') }}?v={{ microtime() }}" ></script>
     @yield('footer-js')
 </body>
 </html>
