@@ -38,8 +38,11 @@ Route::group([
     $route->get('/ticket/{id}/close', 'TicketController@close')->name('ticket.close');
     $route->get('/ticket/{id}/rate/{value?}', 'TicketController@rate')->name('ticket.rate');
 
+    $route->get('img/ticket/{filename}', 'TicketController@getFile')->name('ticket.file.download');
+
 
     $route->post('/ticket', 'TicketController@save')->name('ticket.save');
+    $route->post('/ticket/upload', 'TicketController@uploadFile')->name('ticket.upload');
     $route->post('/ticket/{id}', 'TicketController@update')->name('ticket.update');
 
 });

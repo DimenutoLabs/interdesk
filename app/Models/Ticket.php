@@ -32,6 +32,14 @@ class Ticket extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function observers() {
+        return $this->hasMany(Observer::class);
+    }
+
+    public function attachments() {
+        return $this->hasMany(Attachment::class);
+    }
+
     public function getLastActionsAttribute() {
 
         $access = UserTicketAccess::where('user_id', \Auth::user()->id)

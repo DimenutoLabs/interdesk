@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             [
                 'name' => 'Eduardo Soares',
-                'email' => 'furtyuser@gmail.com',
+                'email' => 'fourthuser@gmail.com',
                 'password' => \Hash::make('123456'),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

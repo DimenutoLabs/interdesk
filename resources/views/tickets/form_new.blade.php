@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="col-12 margin-top-30">
-                <form method="post" action="{{ route('ticket.save') }}" id="new_ticket_form">
+                <form method="post" action="{{ route('ticket.save') }}" id="new_ticket_form" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card">
                         <div class="card-body">
@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <label for="limit_date">{{ __('messages.accept_date') }}</label>
                                         <div class="input-group mb-2">
-                                            <input type="text" class="form-control date datepicker" id="limit_date" name="limit_date">
+                                            <input type="text" class="form-control datepicker" id="limit_date" name="limit_date">
                                             <div class="input-group-append">
                                                 <div class="input-group-text" data-focus-to="limit_date"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -108,9 +108,23 @@
                                     <textarea name="content" id="content" data-field_name="{{__('messages.field_new_ticket_content')}}"></textarea>
                                 </div>
                             </div>
+
+                            <div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-info" id="file-preview-button" style="color: #FFF"><i class="fa fa-fw fa-plus"></i> Selecionar</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row" id="file-preview-zone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary"><i class="fa fa-check fa-fw"></i> {{ __('messages.create_new_ticket') }}</button>
+                            <button class="btn btn-success"><i class="fa fa-check fa-fw"></i> {{ __('messages.create_new_ticket') }}</button>
                         </div>
                     </div>
                 </form>
@@ -125,32 +139,42 @@
         $('.input-group-text').click(function() { $('#' + $(this).attr('data-focus-to') ).focus(); });
 
         $('.same_value').on('change', function() {
-            var values = [];
-            $('.same_value[data-same="' + $(this).attr('data-same') + '"]').each( function() {
-                var currentValues = $(this).val()
-                if ( typeof currentValues === "object" ) {
-                    values = values.concat(currentValues)
-                } else {
-                    if ( currentValues !== "" ) {
-                        values.push(currentValues);
-                    }
-                }
-            });
-
-            var selfSelect = $(this);
-            $('.same_value').each( function() {
-                if ( selfSelect.html() !== $(this).html() ) {
-                    $(this).children().prop('disabled', false);
-                    for ( value in values ) {
-                        $(this).find('option[value="' + values[value] + '"]').prop('disabled', true);
-                    }
-                }
-            });
-            $('.selectpicker').destroy();
-            $('.selectpicker').select2({
+            sameValuesChanged($(this).attr('data-same'), $(this));
+            $('.selectpicker').select2('destroy').select2({
                 allowClear: true,
                 placeholder: '---'
-            });;
+            });
         });
+
+        var sameValuesChanged = function (identifier, currentSelect) {
+
+            var selectedElements = getValuesAsArray(currentSelect);
+
+            $('.same_value[data-same="' + identifier + '"]').each(function() {
+                if ( currentSelect.attr('name') === $(this).attr('name') ) {
+                    return;
+                } else {
+                    $(this).find('option').each(function() {
+                        if ( selectedElements.indexOf( $(this).attr('value') ) === -1 ) {
+                            $(this).prop('disabled', false);
+                        } else {
+                            $(this).prop('disabled', true);
+                        }
+                    })
+                }
+            })
+        };
+
+        var getValuesAsArray = function (selector) {
+            if ( typeof selector.val() === "string" ) {
+                return [ selector.val() ]
+            } else if ( typeof  selector.val() === "object" ) {
+                return selector.val()
+            }
+        };
+    </script>
+
+    <script>
+        $('#file-preview-button').scelUploader();
     </script>
 @endsection

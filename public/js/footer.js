@@ -90,6 +90,7 @@ $('.selectpicker-multiple').select2({
     placeholder: '---',
     tags: true
 });
+$('[data-toggle="tooltip"]').tooltip();
 
 /***/ })
 

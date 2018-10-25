@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DateHelpers;
+use App\Models\Attachment;
 use App\Models\Department;
 use App\Models\Message;
 use App\Models\Observer;
@@ -14,6 +15,8 @@ use App\Models\TicketLogMessage;
 use App\Models\UserTicketAccess;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -54,6 +57,7 @@ class TicketController extends Controller
     public function save(Request $request) {
 
         \DB::beginTransaction();
+
         $ticket = new Ticket();
         $ticket->user_id = $request->user()->id;
         $ticket->small_title = $request->get('small_title');
@@ -68,17 +72,28 @@ class TicketController extends Controller
         }
         $ticket->save();
 
-        dd( $request->all() );
-        dd( $request->get('observers') );
-        if ( $observers = explode(",", $request->get('observers')) ) {
+        if ( $observers = $request->get('observers') ) {
             foreach( $observers as $user ) {
+                echo "entrei : ";
                 if ( !$user ) {
                     continue;
                 }
+                echo $user . "<br/>";
                 $observer = new Observer();
                 $observer->ticket_id = $ticket->id;
                 $observer->user_id = $user;
                 $observer->save();
+            }
+        }
+
+        if ( $files = $request->file('attachments') ) {
+            foreach ( $files as $file ) {
+                $name = $this->uploadFile($file);
+                $path = $this->getFilePath($name);
+                $attachment = new Attachment();
+                $attachment->ticket_id = $ticket->id;
+                $attachment->path = $path;
+                $attachment->save();
             }
         }
 
@@ -107,6 +122,18 @@ class TicketController extends Controller
         $message->ticket_id = $id;
         $message->message = $request->reply_content;
         $message->save();
+
+
+        if ( $files = $request->file('attachments') ) {
+            foreach ( $files as $file ) {
+                $name = $this->uploadFile($file);
+                $path = $this->getFilePath($name);
+                $attachment = new Attachment();
+                $attachment->message_id = $message->id;
+                $attachment->path = $path;
+                $attachment->save();
+            }
+        }
 
 
         $message = __('messages.log_ticket_new_message');
@@ -195,6 +222,27 @@ class TicketController extends Controller
         \DB::commit();
 
         return response("ok");
+    }
+
+    public function uploadFile(UploadedFile $file) {
+
+        $hashName = $file->hashName();
+        $hashName = preg_replace("/^(.+)\.(.+)$/", "$1$2", $hashName);
+
+        $file->storeAs(
+          'tickets', $hashName
+        );
+        return $hashName;
+    }
+
+    public function getFilePath($filename) {
+        return route('ticket.file.download', $filename);
+    }
+
+    public function getFile($filename) {
+        if (Storage::disk('local')->exists("tickets" . DIRECTORY_SEPARATOR . $filename)) {
+            return response()->file( config('filesystems.disks.local.root') . DIRECTORY_SEPARATOR . "tickets" . DIRECTORY_SEPARATOR . $filename );
+        }
     }
 
 }

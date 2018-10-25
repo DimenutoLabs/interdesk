@@ -16,4 +16,5 @@ $('.selectpicker-multiple').select2({
     allowClear: true,
     placeholder: '---',
     tags: true
-})
+});
+$('[data-toggle="tooltip"]').tooltip();

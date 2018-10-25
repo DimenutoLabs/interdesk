@@ -7,14 +7,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Interdesk</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+{{--    <script src="{{ asset('js/pekeUpload/js/pekeUpload.js') }}"></script>--}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/noty.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/preloader.js') }}" defer></script>
     @yield('header-js')
 </head>
 <body>
@@ -22,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/dashboard') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Interdesk
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -75,7 +77,7 @@
             @yield('content')
         </main>
     </div>
-
+    <div id="preloader" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 99999999; background-color: #FFF"></div>
     <!-- Scripts -->
     <script src="{{ asset('js/footer.js') }}?v={{ microtime() }}" ></script>
     @yield('footer-js')

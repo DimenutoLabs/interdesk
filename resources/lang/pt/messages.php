@@ -31,7 +31,7 @@ return [
     'reply_ticket' => 'Responder chamado',
     'ticket_history' => 'Histórico do chamado',
     'ticket_messages' => 'Mensagens do chamado',
-    'ticket_no_messages' => 'Não há mensagens para esse ticket',
+    'ticket_no_messages' => 'Não há mensagens para este chamado',
 
     'accept_date' => 'Data limite para aceitar',
     'date_placeholder' => '__ / __ / ____',

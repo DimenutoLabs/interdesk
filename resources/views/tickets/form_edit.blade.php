@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        {{ __('messages.tickets') }} / {{ __('messages.tickets') }} / {{ __('messages.edit') }}
+                        {{ __('messages.tickets') }} / {{ __('messages.edit') }}
                     </div>
                 </div>
             </div>
@@ -15,10 +15,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
+                            <div><h5>Aberto Por:</h5></div>
                             <div><i class="fa fa-user fa-fw"></i> {{ $ticket->user->name }}</div>
                             <div><i class="fa fa-envelope fa-fw"></i> {{ $ticket->user->email }}</div>
                             <div class="color-gray"><span class="font-10">{{ $ticket->created_at->format('d/m/Y @ H:i:s') }}</span> </div>
                         </div>
+                        @if ($ticket->user_id == \Auth::user()->id || $ticket->agent_user_id == \Auth::user()->id)
                         <div class="float-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,7 +39,28 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
+                    @if ( $ticket->agent_user_id || $ticket->observers->count() )
+                    <div class="card-header" style="background-color: #F4F4FF">
+                        <div class="row">
+                            @if ($ticket->agent_user_id)
+                            <div class="col-6">
+                                <div>Responsável:</div>
+                                <div><i class="fa fa-user fa-fw"></i> {{ $ticket->user->name }} ({{ $ticket->user->email }})</div>
+                            </div>
+                            @endif
+                            @if ( $ticket->observers->count() )
+                            <div class="col-6">
+                                <div>Observadores:</div>
+                                @foreach( $ticket->observers as $observer )
+                                <div><i class="fa fa-user fa-fw"></i> {{ $observer->user->name }} ({{ $observer->user->email }})</div>
+                                @endforeach
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
                     <div class="card-body">
                         <h6><i class="fa fa-comment-o fa-fw"></i> {{ mb_strtoupper($ticket->small_title) }}</h6>
                         <div class="font-14 color-gray">{{ $ticket->title }}</div>
@@ -46,6 +69,24 @@
                             <?php echo $ticket->content; ?>
                         </div>
                     </div>
+                    @if ( $ticket->attachments )
+                    <div class="card-header">
+                        <div>Arquivos em anexo:</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach( $ticket->attachments as $attachment )
+                            <div class="col-2 text-center">
+                                <div style="background-color: #EEE; padding: 5px;">
+                                    <div style="background-color: #FFF; padding: 5px;">
+                                        <img src="{{ $attachment->path }}" height="80">
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
 
@@ -114,7 +155,7 @@
             </div>
 
             <div class="col-12 margin-top-30">
-                <form method="post" id="edit_ticket_form" action=" {{ route('ticket.update', [$ticket->id]) }}">
+                <form method="post" id="edit_ticket_form" action=" {{ route('ticket.update', [$ticket->id]) }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="card">
                         <div class="card-header">
@@ -125,16 +166,31 @@
                                 <label for="reply_content">{{ __('messages.message') }} <b class="color-red">*</b></label>
                                 <textarea name="reply_content" id="reply_content" data-field_name="{{ __('messages.field_edit_ticket_reply_name') }}"></textarea>
                             </div>
+
+                            <div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-info" id="file-preview-button" style="color: #FFF"><i class="fa fa-fw fa-plus"></i> Selecionar</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row" id="file-preview-zone">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button
                                     @if ( ($ticket->agent_user_id != \Auth::user()->id && $ticket->user_id != \Auth::user()->id) || $ticket->status->name == __('messages.ticket_status_closed') )
                                     disabled
                                     @endif
-                                    class="btn btn-primary">
+                                    class="btn btn-success">
                                 <i class="fa fa-check fa-fw"></i> {{ __('messages.reply_ticket') }}
                             </button>
                         </div>
+
                     </div>
                 </form>
             </div>
@@ -180,4 +236,7 @@
         @endif
     </script>
     @endif
+    <script>
+        $('#file-preview-button').scelUploader();
+    </script>
 @endsection

@@ -18,11 +18,13 @@ class CreateTableAttachments extends Migration
 
             $table->string('path');
             $table->integer('ticket_id')->unsigned()->nullable();
+            $table->integer('message_id')->unsigned()->nullable();
 
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('ticket_id', 'attachment_fk_ticket')->references('id')->on('tickets');
+            $table->foreign('message_id', 'attachment_fk_message')->references('id')->on('messages');
         });
     }
 

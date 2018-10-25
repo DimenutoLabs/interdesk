@@ -19,7 +19,6 @@ class CreateTableMessages extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('ticket_id')->unsigned();
             $table->longText('message');
-            $table->integer('attachment_id')->unsigned()->nullable();
 
 
             $table->timestamps();
@@ -27,7 +26,6 @@ class CreateTableMessages extends Migration
 
             $table->foreign('user_id', 'message_fk_user')->references('id')->on('users');
             $table->foreign('ticket_id', 'message_fk_ticket')->references('id')->on('tickets');
-            $table->foreign('attachment_id', 'message_fk_attachment')->references('id')->on('attachments');
         });
     }
 
