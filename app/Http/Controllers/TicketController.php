@@ -70,6 +70,9 @@ class TicketController extends Controller
         if ( $assigned = $request->get('assigned_to') ) {
             $ticket->agent_user_id = $assigned;
         }
+        if ( $department = $request->get('department') ) {
+            $ticket->department_id = $department;
+        }
         $ticket->save();
 
         if ( $observers = $request->get('observers') ) {

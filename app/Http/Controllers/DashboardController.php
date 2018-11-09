@@ -44,10 +44,23 @@ class DashboardController extends Controller
                     ->orWhere('tickets.user_id', $user->id)
                     ->orWhere('tickets.agent_user_id', $user->id);
             })
+            ->orWhere(function($query) use ($user) {
+                $query->whereNull('tickets.agent_user_id')
+                    ->where('tickets.department_id', $user->department_id);
+            })
             ->orderBy('tickets.id', 'ASC')
             ->get();
 
-//        dd( $ticketsCollection );
+
+        if (\Auth::user()->is_admin) {
+            $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
+                ->leftJoin('observers', function($join) use ($user) {
+                    $join->on('observers.ticket_id', 'tickets.id')
+                        ->on('observers.user_id', '=', \DB::raw($user->id) );
+                })
+                ->orderBy('tickets.id', 'ASC')
+                ->get();
+        }
 
         foreach( $ticketsCollection as $ticket ) {
             if ( $ticket->status_id == $statusOpened->id ) {
@@ -58,7 +71,7 @@ class DashboardController extends Controller
                 } else if ( $ticket->observer_id == $user->id ) {
                     $tickets["openeds"]["observeds"][] = $ticket;
                 } else {
-                    $tickets["openeds"]["orphans"][] = $ticket;
+                    $tickets["openeds"]["toMe"][] = $ticket;
                 }
             } else if ( $ticket->status_id == $statusClosed->id ) {
                 if ( $ticket->user_id == $user->id || $ticket->agent_user_id == $user->id ) {
@@ -70,15 +83,6 @@ class DashboardController extends Controller
                 }
             }
         }
-
-//        dd( $tickets );
-//
-//        if (\Auth::user()->is_admin) {
-//            $openTickets = Ticket::where('status_id', $statusOpened->id )
-//                            ->get();
-//            $closedTickets = Ticket::where('status_id', $statusClosed->id )
-//                ->get();
-//        }
 
 
         return view('dashboard.index')

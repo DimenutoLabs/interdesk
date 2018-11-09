@@ -109,7 +109,7 @@
                             <td>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <a href="{{ route('ticket.edit', [$ticket->id]) }}"><button class="btn btn-info btn-sm"><i class="fa fa-fw fa-binoculars"></i></button></a>
+                                        <a href="{{ route('ticket.edit', [$ticket->id]) }}"><button class="btn btn-info btn-sm" style="color: #FFF"><i class="fa fa-fw fa-binoculars"></i></button></a>
                                     </div>
                                 </div>
                             </td>

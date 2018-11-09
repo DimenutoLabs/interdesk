@@ -2,6 +2,37 @@
 
 @section('content')
     <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Bem Vindo</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2" style="text-align: right; color: #999; font-size: 12px; line-height: 20px; white-space: nowrap;">Nome:</div>
+                            <div class="col-4">{{ \Auth::user()->name }}</div>
+
+                            <div class="col-2" style="text-align: right; color: #999; font-size: 12px; line-height: 20px; white-space: nowrap;">Email:</div>
+                            <div class="col-4">{{ \Auth::user()->email }}</div>
+
+                            <div class="col-12"><div style="background-color: #EEE; height: 1px; width: 100%; margin: 5px 0;"></div></div>
+
+                            <div class="col-2" style="text-align: right; color: #999; font-size: 12px; line-height: 20px; white-space: nowrap;">Departamento:</div>
+                            <div class="col-4">{{ \Auth::user()->department->name }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Estatísticas</div>
+                    <div class="card-body">
+                        <span style="color: #77F">{{ count($tickets["openeds"]["byMe"]) + count($tickets["openeds"]["toMe"]) + count($tickets["openeds"]["observeds"]) + count($tickets["closeds"]["mine"]) }}</span> Chamados Totais
+                        <div style="background-color: #EEE; height: 1px; width: 100%; margin: 5px 0;"></div>
+                        <span style="color: #77F">{{ count($tickets["openeds"]["byMe"]) + count($tickets["openeds"]["toMe"]) }}</span> Chamados em Aberto
+                    </div>
+                </div>
+            </div>
+        </div>
         {{--<div class="row">--}}
             {{--<div class="col-md-8">--}}
                 {{--<div class="card">--}}

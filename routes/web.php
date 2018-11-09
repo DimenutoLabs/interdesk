@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('dashboard');
 });
 
 Route::resource('/dashboard', 'Web\DashboardController');
@@ -44,6 +44,10 @@ Route::group([
     $route->post('/ticket', 'TicketController@save')->name('ticket.save');
     $route->post('/ticket/upload', 'TicketController@uploadFile')->name('ticket.upload');
     $route->post('/ticket/{id}', 'TicketController@update')->name('ticket.update');
+
+    $route->get('/profile', function() {
+
+    })->name('profile');
 
 });
 Auth::routes();

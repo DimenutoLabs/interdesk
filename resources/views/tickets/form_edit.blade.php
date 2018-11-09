@@ -20,21 +20,24 @@
                             <div><i class="fa fa-envelope fa-fw"></i> {{ $ticket->user->email }}</div>
                             <div class="color-gray"><span class="font-10">{{ $ticket->created_at->format('d/m/Y @ H:i:s') }}</span> </div>
                         </div>
-                        @if ($ticket->user_id == \Auth::user()->id || $ticket->agent_user_id == \Auth::user()->id)
+                        @if ($ticket->user_id == \Auth::user()->id || $ticket->agent_user_id == \Auth::user()->id || ($ticket->agent_user_id == null && $ticket->department_id == \Auth::user()->department_id ) )
                         <div class="float-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ $ticket->status->name }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    @if ( $ticket->status->action == __('messages.ticket_action_create') )
-                                        @if ( !$ticket->agent_user_id && $ticket->user_id != \Auth::user()->id )
-                                            <a class="dropdown-item" href="{{ route('ticket.agent.become', $ticket->id) }}">Tornar Responsável</a>
+                                    @if ( $ticket->agent_user_id == null && $ticket->user_id != \Auth::user()->id )
+                                        <a class="dropdown-item" href="{{ route('ticket.agent.become', $ticket->id) }}">Tornar Responsável</a>
+                                    @elseif ( $ticket->status->action == __('messages.ticket_action_create') )
+                                        @if ( $ticket->user_id != \Auth::user()->id )
+                                            <div class="dropdown-item" id="close-ticket" style="cursor: pointer">Fechar</div>
+                                        @elseif ( $ticket->agent_user_id == \Auth::user()->id )
+
                                         @endif
-                                        <a class="dropdown-item" href="{{ route('ticket.close', $ticket->id) }}">Fechar</a>
-                                        <a class="dropdown-item" href="#">Colocar em Espera</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Transferir</a>
+                                        {{--<a class="dropdown-item" href="#">Colocar em Espera</a>--}}
+                                        {{--<div class="dropdown-divider"></div>--}}
+                                        {{--<a class="dropdown-item" href="#">Transferir</a>--}}
                                     @endif
                                 </div>
                             </div>
@@ -47,7 +50,7 @@
                             @if ($ticket->agent_user_id)
                             <div class="col-6">
                                 <div>Responsável:</div>
-                                <div><i class="fa fa-user fa-fw"></i> {{ $ticket->user->name }} ({{ $ticket->user->email }})</div>
+                                <div><i class="fa fa-user fa-fw"></i> {{ $ticket->agent->name }} ({{ $ticket->agent->email }})</div>
                             </div>
                             @endif
                             @if ( $ticket->observers->count() )
@@ -194,7 +197,7 @@
                     </div>
                 </form>
             </div>
-
+            @if ( \Auth::user()->is_admin )
             <div class="col-12 margin-top-30">
                 <div class="card">
                     <div class="card-header">
@@ -217,6 +220,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @endsection
@@ -238,5 +242,10 @@
     @endif
     <script>
         $('#file-preview-button').scelUploader();
+        $('#close-ticket').click(function() {
+            if ( confirm("Deseja realmente fechar este chamado?") ) {
+                window.location.href = "{{ route('ticket.close', $ticket->id) }}"
+            }
+        })
     </script>
 @endsection
