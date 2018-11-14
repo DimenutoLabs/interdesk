@@ -18,6 +18,9 @@
                                 Responsável
                             </th>
                             <th>
+                                Título
+                            </th>
+                            <th>
                                 Obs.
                             </th>
                             <th>
@@ -65,6 +68,13 @@
                                     <div class="col-12">
                                         <div class=""><b>{{ $ticket->agent ? $ticket->agent->name : "----" }}</b></div>
                                         <div><i>{{ $ticket->department ? $ticket->department->name : "----" }}</i></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-12">
+                                        {{ $ticket->small_title }}
                                     </div>
                                 </div>
                             </td>
