@@ -82,11 +82,32 @@ require('starrr/dist/starrr');
 
                 reader.onload = (function (id) {
                     return function (e) {
+
+                        var type = e.target.result.replace(/^data:(.+?)\/(.+?);base64.+/gi, "$1");
+                        var subType = e.target.result.replace(/^data:(.+?)\/(.+?);base64.+/gi, "$2");
+
+                        var preview = '       <img src="' + e.target.result + '"  style="max-width: 120px; max-height: 120px">';
+
+                        if ( type === "video" ) {
+                            preview = '       <video src="' + e.target.result + '"  style="max-width: 120px; max-height: 120px" controls>';
+                        } else if ( type === "audio" ) {
+                            preview = '       <audio src="' + e.target.result + '" controls style="max-width: 120px; max-height: 120px">';
+                        } else if ( type === "text") {
+                            preview = '       <img src="svg/file.png" style="max-width: 120px; max-height: 120px">';
+                        } else if ( type === "application") {
+                            if ( subType.replace(/^.+(officedocument).+$/gi, "$1") === "officedocument" ) {
+                                preview = '       <img src="/svg/office.png" style="max-width: 120px; max-height: 120px">';
+                            } else if ( subType === "pdf" ) {
+                                preview = '       <img src="/svg/pdf.png" style="max-width: 120px; max-height: 120px">';
+                            }
+                        }
+
+
                         $(zone).append( '<div class="col-2 col-xs-4 text-center scel-preview-image-container" data-id="' + id + '" style="margin-top: 15px; overflow: hidden">' +
                             '<div style="background: #FFF; padding: 5px; border: 4px dotted #EEE; position: relative">' +
-                            '<div style="position: absolute; top: 0; right: 0"><button type="button" class="btn btn-danger scel-preview-image-delete-button" data-id="' + id + '"><i class="fa fa-fw fa-trash"></i></button></div>' +
-                            '<img src="' + e.target.result + '" height="120">' +
-                            '</div>' +
+                            '   <div style="position: absolute; top: 0; right: 0"><button type="button" class="btn btn-danger scel-preview-image-delete-button" data-id="' + id + '"><i class="fa fa-fw fa-trash"></i></button></div>' +
+                            preview +
+                            '   </div>' +
                             '</div>' );
                     }
                 })(input.getAttribute('data-id'))

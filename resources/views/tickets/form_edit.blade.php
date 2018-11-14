@@ -30,7 +30,7 @@
                                     @if ( $ticket->agent_user_id == null && $ticket->user_id != \Auth::user()->id )
                                         <a class="dropdown-item" href="{{ route('ticket.agent.become', $ticket->id) }}">Tornar Responsável</a>
                                     @elseif ( $ticket->status->action == __('messages.ticket_action_create') )
-                                        @if ( $ticket->user_id != \Auth::user()->id )
+                                        @if ( $ticket->user_id == \Auth::user()->id )
                                             <div class="dropdown-item" id="close-ticket" style="cursor: pointer">Fechar</div>
                                         @elseif ( $ticket->agent_user_id == \Auth::user()->id )
 

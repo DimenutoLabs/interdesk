@@ -77,11 +77,9 @@ class TicketController extends Controller
 
         if ( $observers = $request->get('observers') ) {
             foreach( $observers as $user ) {
-                echo "entrei : ";
                 if ( !$user ) {
                     continue;
                 }
-                echo $user . "<br/>";
                 $observer = new Observer();
                 $observer->ticket_id = $ticket->id;
                 $observer->user_id = $user;
@@ -228,6 +226,18 @@ class TicketController extends Controller
     }
 
     public function uploadFile(UploadedFile $file) {
+
+
+
+        if ( $file->getMimeType() == "application/pdf" ||
+            preg_match("/^image.+$/",$file->getMimeType()) ||
+            preg_match("/^video.+$/",$file->getMimeType()) ||
+            preg_match("/.+officedocument.+$/",$file->getMimeType())
+        ) {
+            echo "Mime OK!";
+        }
+
+        dd( $file );
 
         $hashName = $file->hashName();
         $hashName = preg_replace("/^(.+)\.(.+)$/", "$1$2", $hashName);
