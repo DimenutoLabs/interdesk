@@ -82,7 +82,7 @@
                             <div class="col-2 text-center">
                                 <div style="background-color: #EEE; padding: 5px;">
                                     <div style="background-color: #FFF; padding: 5px;">
-                                        <img src="{{ $attachment->path }}" height="80">
+                                       <a href="{{ $attachment->path }}" target="__blank"><img src="{{ $attachment->path }}" height="80"></a>
                                     </div>
                                 </div>
                             </div>
