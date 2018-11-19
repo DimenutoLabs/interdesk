@@ -227,17 +227,15 @@ class TicketController extends Controller
 
     public function uploadFile(UploadedFile $file) {
 
-
-
-        if ( $file->getMimeType() == "application/pdf" ||
-            preg_match("/^image.+$/",$file->getMimeType()) ||
-            preg_match("/^video.+$/",$file->getMimeType()) ||
-            preg_match("/.+officedocument.+$/",$file->getMimeType())
-        ) {
-            echo "Mime OK!";
-        }
-
-        dd( $file );
+//        if ( $file->getMimeType() == "application/pdf" ||
+//            preg_match("/^image.+$/",$file->getMimeType()) ||
+//            preg_match("/^video.+$/",$file->getMimeType()) ||
+//            preg_match("/.+officedocument.+$/",$file->getMimeType())
+//        ) {
+//            echo "Mime OK!";
+//        }
+//
+//        dd( $file );
 
         $hashName = $file->hashName();
         $hashName = preg_replace("/^(.+)\.(.+)$/", "$1$2", $hashName);
