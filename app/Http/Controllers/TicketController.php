@@ -125,17 +125,17 @@ class TicketController extends Controller
         $message->save();
 
 
+
         if ( $files = $request->file('attachments') ) {
             foreach ( $files as $file ) {
                 $name = $this->uploadFile($file);
-                $path = $this->getFilePath($name);
                 $attachment = new Attachment();
-                $attachment->message_id = $message->id;
-                $attachment->path = $path;
+                $attachment->ticket_id = $ticket->id;
+                $attachment->path = $name[0];
+                $attachment->original_name = $name[1];
                 $attachment->save();
             }
         }
-
 
         $message = __('messages.log_ticket_new_message');
         $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
