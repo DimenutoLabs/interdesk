@@ -51,7 +51,7 @@ class Ticket extends Model
                 $attachment->src = "/svg/pdf.png";
             } else if ( preg_match("/^image.+$/",$mime) ) {
                 $attachment->type = "img";
-                $attachment->src = route("", $attachment->path);
+                $attachment->src = route('ticket.file.download', $attachment->path);
             } else if ( preg_match("/^video.+$/",$mime) ) {
                 $attachment->type = "video";
                 $attachment->src = route('ticket.file.download', $attachment->path);
