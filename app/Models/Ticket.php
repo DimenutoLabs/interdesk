@@ -55,7 +55,7 @@ class Ticket extends Model
             } else if ( preg_match("/^video.+$/",$mime) ) {
                 $attachment->type = "video";
                 $attachment->src = route('ticket.file.download', $attachment->path);
-            } else if ( preg_match("/.+officedocument.+$/",$mime) ) {
+            } else if ( preg_match("/.+officedocument.+$/",$mime) || "application/msword" ) {
                 $attachment->type = "img";
                 $attachment->src = "/svg/office.png";
             } else {
