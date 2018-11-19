@@ -130,7 +130,8 @@ class TicketController extends Controller
             foreach ( $files as $file ) {
                 $name = $this->uploadFile($file);
                 $attachment = new Attachment();
-                $attachment->ticket_id = $ticket->id;
+//                $attachment->ticket_id = $ticket->id;
+                $attachment->message_id = $message->id;
                 $attachment->path = $name[0];
                 $attachment->original_name = $name[1];
                 $attachment->save();

@@ -117,6 +117,22 @@
                                                     <div>
                                                         <?php echo $message->message; ?>
                                                     </div>
+                                                    @if ( $message->attachments->count() )
+                                                        <hr>
+                                                        <div class="row">
+                                                            @foreach( $message->attachments as $attachment )
+                                                                <div class="col-sm-2 col-3">
+                                                                    <div style="background-color: #EEE; padding: 5px;">
+                                                                        <div style="background-color: #FFF; padding: 5px; height: 50px;">
+                                                                            <a href="{{ route('ticket.file.download',$attachment->path) }}" target="__blank">
+                                                                                <{{ $attachment->type }} src="{{ $attachment->src }}" style="max-width: 100%; max-height: 100%">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
