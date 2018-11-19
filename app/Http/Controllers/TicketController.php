@@ -92,7 +92,8 @@ class TicketController extends Controller
                 $name = $this->uploadFile($file);
                 $attachment = new Attachment();
                 $attachment->ticket_id = $ticket->id;
-                $attachment->path = $name;
+                $attachment->path = $name[0];
+                $attachment->original_name = $name[1];
                 $attachment->save();
             }
         }
@@ -233,16 +234,13 @@ class TicketController extends Controller
 //        ) {
 //            echo "Mime OK!";
 //        }
-//
-//        dd( $file );
 
         $hashName = $file->hashName();
-//        $hashName = preg_replace("/^(.+)\.(.+)$/", "$1$2", $hashName);
 
         $file->storeAs(
           'tickets', $hashName
         );
-        return $hashName;
+        return [$hashName, $file->getClientOriginalName()];
     }
 
     public function getFilePath($filename) {
