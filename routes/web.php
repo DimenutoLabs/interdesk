@@ -46,10 +46,12 @@ Route::group([
     $route->post('/ticket/{id}', 'TicketController@update')->name('ticket.update');
 
     $route->get('/profile', function() {
-
     })->name('profile');
 
 });
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/password/change', 'ProfileController@change')->name('password.change');
+Route::post('/password/change', 'ProfileController@save');
