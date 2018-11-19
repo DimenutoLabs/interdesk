@@ -90,10 +90,9 @@ class TicketController extends Controller
         if ( $files = $request->file('attachments') ) {
             foreach ( $files as $file ) {
                 $name = $this->uploadFile($file);
-                $path = $this->getFilePath($name);
                 $attachment = new Attachment();
                 $attachment->ticket_id = $ticket->id;
-                $attachment->path = $path;
+                $attachment->path = $name;
                 $attachment->save();
             }
         }
@@ -238,7 +237,7 @@ class TicketController extends Controller
 //        dd( $file );
 
         $hashName = $file->hashName();
-        $hashName = preg_replace("/^(.+)\.(.+)$/", "$1$2", $hashName);
+//        $hashName = preg_replace("/^(.+)\.(.+)$/", "$1$2", $hashName);
 
         $file->storeAs(
           'tickets', $hashName
@@ -247,7 +246,7 @@ class TicketController extends Controller
     }
 
     public function getFilePath($filename) {
-        return route('ticket.file.download', $filename);
+        return route('ticket.file.download', $filename, 1);
     }
 
     public function getFile($filename) {

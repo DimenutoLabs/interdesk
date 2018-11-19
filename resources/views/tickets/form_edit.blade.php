@@ -82,7 +82,7 @@
                             <div class="col-2 text-center">
                                 <div style="background-color: #EEE; padding: 5px;">
                                     <div style="background-color: #FFF; padding: 5px;">
-                                       <a href="{{ $attachment->path }}" target="__blank"><img src="{{ $attachment->path }}" height="80"></a>
+                                       <a href="{{ route('ticket.file.download',$attachment->path) }}" target="__blank"><{{ $attachment->type }} src="{{ $attachment->src }}" height="80"></a>
                                     </div>
                                 </div>
                             </div>
