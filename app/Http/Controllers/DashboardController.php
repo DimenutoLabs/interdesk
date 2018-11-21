@@ -20,7 +20,7 @@ class DashboardController extends Controller
                 "byMe" => [],
                 "toMe" => [],
                 "observeds" => [],
-                "orphans" => []
+                "orphans" => [],
             ],
             "closeds" => [
                 "mine" => [],
@@ -30,7 +30,7 @@ class DashboardController extends Controller
             "expireds" => [
                 "myTickets" => [],
                 "observedTickets" => [],
-            ]
+            ],
         ];
 
 
@@ -71,7 +71,7 @@ class DashboardController extends Controller
                 } else if ( $ticket->observer_id == $user->id ) {
                     $tickets["openeds"]["observeds"][] = $ticket;
                 } else {
-                    $tickets["openeds"]["toMe"][] = $ticket;
+                    $tickets["openeds"]["orphans"][] = $ticket;
                 }
             } else if ( $ticket->status_id == $statusClosed->id ) {
                 if ( $ticket->user_id == $user->id || $ticket->agent_user_id == $user->id ) {

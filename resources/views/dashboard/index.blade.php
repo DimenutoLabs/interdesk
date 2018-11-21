@@ -120,8 +120,24 @@
         @include('dashboard.section')
 
         @php
-            $sectionTickets = $tickets["closeds"]["mine"];
+            $sectionTickets = array_slice($tickets["closeds"]["mine"],0,10);
+            //dd( $sectionTickets );
+            //$sectionTickets = $tickets["closeds"]["mine"];
             $sectionName = "Chamados fechados que participo";
+            $hideIfBlank = true;
+        @endphp
+        @include('dashboard.section')
+
+        @php
+            $sectionTickets = $tickets["openeds"]["orphans"];
+            $sectionName = "Demais chamados - Abertos";
+            $hideIfBlank = true;
+        @endphp
+        @include('dashboard.section')
+
+        @php
+            $sectionTickets = array_slice($tickets["closeds"]["orphans"],0,10);
+            $sectionName = "Demais chamados - Fechados";
             $hideIfBlank = true;
         @endphp
         @include('dashboard.section')
