@@ -48,6 +48,9 @@ Route::group([
     $route->get('/profile', function() {
     })->name('profile');
 
+    $route->get('controller_room', 'ControllerRoomController@index' )->name('controller_room');
+    $route->post('controller_room', 'ControllerRoomController@filter' )->name('controller_room');
+
 });
 Auth::routes();
 

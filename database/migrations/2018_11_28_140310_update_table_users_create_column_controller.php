@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTableUserAddColumnForceUpdatePassword extends Migration
+class UpdateTableUsersCreateColumnController extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateTableUserAddColumnForceUpdatePassword extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('force_update_password')->default(false)->after('email_verified_at');
+            $table->boolean('is_controller')->default(false)->after('is_admin');
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateTableUserAddColumnForceUpdatePassword extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('force_update_password');
+            $table->dropColumn('is_controller');
         });
     }
 }

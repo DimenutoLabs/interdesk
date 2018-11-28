@@ -56,6 +56,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if (\Auth::user()->is_controller) <a class="dropdown-item" href="{{ route('controller_room') }}">Controladoria</a>@endif
                                     <a class="dropdown-item" href="{{ route('password.change') }}">Alterar Senha</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
