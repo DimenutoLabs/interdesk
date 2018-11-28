@@ -30,6 +30,7 @@ class ControllerRoomController extends Controller
         $departments = Department::all();
 
         $tickets = Ticket::select('tickets.*', 'departments.id as dept_id', 'departments.name as dept_nome')
+                        ->where('rating', '>', '0')
                         ->leftJoin('users', 'users.id', '=', 'tickets.agent_user_id')
                         ->leftJoin('departments', 'departments.id', '=', 'users.department_id');
 
