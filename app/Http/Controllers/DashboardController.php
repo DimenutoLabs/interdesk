@@ -75,11 +75,11 @@ class DashboardController extends Controller
                 }
             } else if ( $ticket->status_id == $statusClosed->id ) {
                 if ( $ticket->user_id == $user->id || $ticket->agent_user_id == $user->id ) {
-                    $tickets["closeds"]["mine"][] = $ticket;
+                    array_unshift($tickets["closeds"]["mine"], $ticket);
                 } else if ( $ticket->observer_id == $user->id ) {
-                    $tickets["closeds"]["observeds"][] = $ticket;
+                    array_unshift($tickets["closeds"]["observeds"], $ticket);
                 } else {
-                    $tickets["closeds"]["orphans"][] = $ticket;
+                    array_unshift($tickets["closeds"]["orphans"], $ticket);
                 }
             }
         }
