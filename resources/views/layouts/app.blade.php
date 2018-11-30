@@ -99,11 +99,11 @@
             else {
                 var notification = new Notification(title, {
                     icon: '{{ asset('images/logo.png') }}',
-                    body: body,
+                    body: body
                 });
 
                 notification.onclick = function () {
-                    window.open(link);
+                    window.location.href = link
                 };
 
             }
@@ -116,7 +116,6 @@
         function getNotifications() {
             $.get('/notifications')
                 .done(function(e) {
-                    console.log( e );
                     if ( e.length > 0) {
                         notifyMe(
                             e[0].title,

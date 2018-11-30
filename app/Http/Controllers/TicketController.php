@@ -134,6 +134,14 @@ class TicketController extends Controller
         $message->message = $request->reply_content;
         $message->save();
 
+        $notification = new Notification();
+        $notification->ticket_id = $id;
+        $notification->user_id = $ticket->user_id == $request->user()->id ? $ticket->agent_user_id : $ticket->user_id();
+        $notification->read = false;
+        $notification->message = "Respondeu um chamado que você participa";
+        $notification->url = route('ticket.update', $ticket->id);
+        $notification->save();
+
 
 
         if ( $files = $request->file('attachments') ) {

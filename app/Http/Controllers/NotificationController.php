@@ -29,7 +29,7 @@ class NotificationController extends Controller
                     [[
                         "title" => "Novas Notificações",
                         "text" => "Você tem " . $quantidade . " notificações novas.",
-                        "url" => route('notifications'),
+                        "url" => route('notifications.list'),
                     ]]
                 );
             }
@@ -39,7 +39,7 @@ class NotificationController extends Controller
     public function list() {
 
         $notifications = Notification::where('user_id', \Auth::user()->id)
-            ->where('read', false)
+            ->orderBy('read', 'asc')
             ->get();
 
         return view('notifications.index')

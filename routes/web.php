@@ -52,7 +52,7 @@ Route::group([
     $route->post('controller_room', 'ControllerRoomController@filter' )->name('controller_room');
 
     $route->get('notifications', 'NotificationController@index')->name('notifications');
-    $route->get('notifications/list', 'NotificationController@list')->name('notification.list');
+    $route->get('notifications/list', 'NotificationController@list')->name('notifications.list');
 
 });
 Auth::routes();
