@@ -36,6 +36,25 @@ class Ticket extends Model
         return $this->hasMany(Observer::class);
     }
 
+    public function agentUserId() {
+        return $this->agent();
+    }
+//    public function agentUserIdList(){
+//        return User::orderBy('created_at')->get();
+//    }
+    public function userId() {
+        return $this->user();
+    }
+    public function priorId() {
+        return $this->prior();
+    }
+    public function departmentId() {
+        return $this->department();
+    }
+    public function statusId() {
+        return $this->status();
+    }
+
 //    public function attachments() {
 //        return $this->hasMany(Attachment::class);
 //    }

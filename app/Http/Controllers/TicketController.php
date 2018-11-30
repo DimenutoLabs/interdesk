@@ -6,6 +6,7 @@ use App\DateHelpers;
 use App\Models\Attachment;
 use App\Models\Department;
 use App\Models\Message;
+use App\Models\Notification;
 use App\Models\Observer;
 use App\Models\Prior;
 use App\Models\Status;
@@ -47,6 +48,15 @@ class TicketController extends Controller
 
         $logs = TicketLogMessage::where('ticket_id', $id)
             ->get();
+
+        $notifications = Notification::where('user_id', \Auth::user()->id)
+                            ->where('ticket_id', $id)
+                            ->where('read', false)
+                            ->get();
+        foreach( $notifications as $notification ) {
+            $notification->read = true;
+            $notification->save();
+        }
 
         return view('tickets.form_edit')
             ->with('ticket', $ticket)

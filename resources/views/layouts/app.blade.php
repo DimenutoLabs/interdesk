@@ -74,7 +74,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
@@ -83,5 +82,52 @@
     <!-- Scripts -->
     <script src="{{ asset('js/footer.js') }}?v={{ microtime() }}" ></script>
     @yield('footer-js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!Notification) {
+                alert('Seu browser não permite notificações, tente usar FIREFOX ou CHROME');
+                return;
+            }
+
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+        });
+
+        function notifyMe(title, body, link) {
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+            else {
+                var notification = new Notification(title, {
+                    icon: '{{ asset('images/logo.png') }}',
+                    body: body,
+                });
+
+                notification.onclick = function () {
+                    window.open(link);
+                };
+
+            }
+
+        }
+
+        setInterval(function() {
+            getNotifications();
+        }, 120000);
+        function getNotifications() {
+            $.get('/notifications')
+                .done(function(e) {
+                    console.log( e );
+                    if ( e.length > 0) {
+                        notifyMe(
+                            e[0].title,
+                            e[0].text,
+                            e[0].url
+                        );
+                    }
+                })
+        }
+
+        getNotifications();
+    </script>
 </body>
 </html>

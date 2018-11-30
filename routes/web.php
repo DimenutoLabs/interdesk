@@ -51,6 +51,9 @@ Route::group([
     $route->get('controller_room', 'ControllerRoomController@index' )->name('controller_room');
     $route->post('controller_room', 'ControllerRoomController@filter' )->name('controller_room');
 
+    $route->get('notifications', 'NotificationController@index')->name('notifications');
+    $route->get('notifications/list', 'NotificationController@list')->name('notification.list');
+
 });
 Auth::routes();
 
@@ -58,3 +61,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/password/change', 'ProfileController@change')->name('password.change');
 Route::post('/password/change', 'ProfileController@save');
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
