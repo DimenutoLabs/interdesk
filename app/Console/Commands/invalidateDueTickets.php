@@ -52,10 +52,10 @@ class invalidateDueTickets extends Command
 
         $this->warn($dueOpeneds . " Tickets with due date");
 
-//        $tickets->update([
-//                "status_id" => Status::where('name', __('messages.ticket_status_expired'))->first()->id,
-//                "rating" => 0
-//        ]);
+        $tickets->update([
+                "status_id" => Status::where('name', __('messages.ticket_status_expired'))->first()->id,
+                "rating" => 0
+        ]);
 
         $this->error("Expiring " . $dueOpeneds . " tickets");
 
