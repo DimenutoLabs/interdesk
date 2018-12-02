@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Notification;
 use App\Models\Status;
 use App\Models\Ticket;
+use App\User;
 use Illuminate\Console\Command;
 
 class invalidateDueTickets extends Command
@@ -50,11 +52,48 @@ class invalidateDueTickets extends Command
 
         $this->warn($dueOpeneds . " Tickets with due date");
 
-        $tickets->update([
-                "status_id" => Status::where('name', __('messages.ticket_status_expired'))->first()->id,
-                "rating" => 0
-        ]);
+//        $tickets->update([
+//                "status_id" => Status::where('name', __('messages.ticket_status_expired'))->first()->id,
+//                "rating" => 0
+//        ]);
 
         $this->error("Expiring " . $dueOpeneds . " tickets");
+
+        foreach ( $tickets->cursor() as $ticket ) {
+
+            $notification = new Notification();
+            $notification->ticket_id = $ticket->id;
+            $notification->user_id = $ticket->user_id;
+            $notification->read = false;
+            $notification->message = "Um ticket criado por você expirou.";
+            $notification->url = "/ticket/" . $ticket->id . "/edit";
+            $notification->save();
+
+            if ( $ticket->agent_user_id ) {
+                $notification = new Notification();
+                $notification->ticket_id = $ticket->id;
+                $notification->user_id = $ticket->agent_user_id;
+                $notification->read = false;
+                $notification->message = "Um ticket cujo você é responsável expirou.";
+                $notification->url = "/ticket/" . $ticket->id . "/edit";
+                $notification->save();
+            } else {
+                $department = $ticket->department_id;
+                $departmentUsers = User::where('department_id', $department)->get();
+                foreach( $departmentUsers as $departmentUser ) {
+                    if ( $departmentUser->id == $ticket->user_id ) {
+                        continue;
+                    }
+
+                    $notification = new Notification();
+                    $notification->ticket_id = $ticket->id;
+                    $notification->user_id = $departmentUser->id;
+                    $notification->read = false;
+                    $notification->message = "Um ticket aberto para seu departamento expirou.";
+                    $notification->url = "/ticket/" . $ticket->id . "/edit";
+                    $notification->save();
+                }
+            }
+        }
     }
 }
