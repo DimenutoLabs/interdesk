@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Status;
 use App\Models\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,26 +13,6 @@ class DashboardController extends Controller
     public function index() {
 
         $user = \Auth::user();
-        $statusOpened = Status::where('action', __('messages.ticket_action_create'))->first();
-        $statusClosed = Status::where('action', __('messages.ticket_action_close'))->first();
-
-        $tickets = [
-            "openeds" => [
-                "byMe" => [],
-                "toMe" => [],
-                "observeds" => [],
-                "orphans" => [],
-            ],
-            "closeds" => [
-                "mine" => [],
-                "observeds" => [],
-                "orphans" => []
-            ],
-            "expireds" => [
-                "myTickets" => [],
-                "observedTickets" => [],
-            ],
-        ];
 
 
         $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
@@ -62,6 +43,32 @@ class DashboardController extends Controller
                 ->get();
         }
 
+        return $this->getTickets($ticketsCollection, $user);
+    }
+
+    public function getTickets($ticketsCollection, User $user) {
+
+        $statusOpened = Status::where('action', __('messages.ticket_action_create'))->first();
+        $statusClosed = Status::where('action', __('messages.ticket_action_close'))->first();
+
+        $tickets = [
+            "openeds" => [
+                "byMe" => [],
+                "toMe" => [],
+                "observeds" => [],
+                "orphans" => [],
+            ],
+            "closeds" => [
+                "mine" => [],
+                "observeds" => [],
+                "orphans" => []
+            ],
+            "expireds" => [
+                "myTickets" => [],
+                "observedTickets" => [],
+            ],
+        ];
+
         foreach( $ticketsCollection as $ticket ) {
             if ( $ticket->status_id == $statusOpened->id ) {
                 if ( $ticket->user_id == $user->id ) {
@@ -88,6 +95,79 @@ class DashboardController extends Controller
         return view('dashboard.index')
             ->with('tickets', $tickets)
             ->with('statusOpened', $statusOpened);
+    }
+
+
+    public function filterForm() {
+
+        $possibleUsers = User::all();
+        $agents = User::all();
+
+        return view('dashboard.filter')
+                    ->with('agents', $agents)
+                    ->with('users', $possibleUsers);
+    }
+
+    public function filter(Request $request) {
+
+        $user = \Auth::user();
+
+
+        $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
+            ->leftJoin('observers', function($join) use ($user) {
+                $join->on('observers.ticket_id', 'tickets.id')
+                    ->on('observers.user_id', '=', \DB::raw($user->id) );
+            })
+            ->where(function($query) use ($user) {
+                $query->where(function($subQuery) use ($user) {
+                    $subQuery->where('observers.user_id', $user->id)
+                        ->orWhere('tickets.user_id', $user->id)
+                        ->orWhere('tickets.agent_user_id', $user->id);
+                })
+                    ->orWhere(function($subQuery) use ($user) {
+                        $subQuery->whereNull('tickets.agent_user_id')
+                        ->where('tickets.department_id', $user->department_id);
+                });
+            })
+
+            ->orderBy('tickets.id', 'ASC');
+
+
+
+        if (\Auth::user()->is_admin) {
+            $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
+                ->leftJoin('observers', function($join) use ($user) {
+                    $join->on('observers.ticket_id', 'tickets.id')
+                        ->on('observers.user_id', '=', \DB::raw($user->id) );
+                })
+                ->orderBy('tickets.id', 'ASC');
+        }
+
+        if ( $createdBy = $request->get('user') ) {
+            $ticketsCollection = $ticketsCollection->where('tickets.user_id', $createdBy);
+        }
+        if ( $agent = $request->get('agent') ) {
+            $ticketsCollection = $ticketsCollection->where('tickets.agent_user_id', $agent);
+        }
+        if ( $title = $request->get('title') ) {
+            $ticketsCollection = $ticketsCollection->where(function($query) use ($title) {
+                $query->where('tickets.small_title', 'LIKE', '%' . $title . '%')
+                    ->orWhere('tickets.title', 'LIKE', '%' . $title . '%');
+            });
+        }
+        if ( $content = $request->get('content')) {
+            $ticketsCollection = $ticketsCollection->where('tickets.content', 'LIKE', '%' . $content . '%');
+        }
+        if ( $start = $request->get('start-date')) {
+            $ticketsCollection = $ticketsCollection->where('tickets.created_at', '>=', preg_replace("/^(..).(..).(....).*$/", "$3-$2-$1", $start) );
+        }
+        if ( $end = $request->get('end-date')) {
+            $ticketsCollection = $ticketsCollection->where('tickets.created_at', '<=', preg_replace("/^(..).(..).(....).*$/", "$3-$2-$1", $end) );
+        }
+
+        $ticketsCollection = $ticketsCollection->get();
+
+        return $this->getTickets($ticketsCollection, $user);
     }
 
 }

@@ -19,7 +19,7 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
-Route::resource('/dashboard', 'Web\DashboardController');
+//Route::resource('/dashboard', 'Web\DashboardController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -30,6 +30,8 @@ Route::group([
 ], function(Router $route) {
 
     $route->get('/dashboard', 'DashboardController@index')->name('dashboard');
+    $route->post('/dashboard', 'DashboardController@filter')->name('dashboard');
+    $route->get('/dashboard/filter', 'DashboardController@filterForm')->name('dashboard.filter');
     $route->get('/ticket', 'TicketController@index')->name('ticket.home');
     $route->get('/ticket/create', 'TicketController@create')->name('ticket.create');
     $route->get('/ticket/{id}/edit', 'TicketController@edit')->name('ticket.edit');

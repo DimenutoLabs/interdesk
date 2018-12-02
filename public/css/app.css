@@ -16323,3 +16323,16 @@ a.text-dark:focus {
   height: 38px !important;
 }
 
+/* */
+
+.filter-button {
+  position: fixed;
+  top: 10%;
+  right: -5px;
+  opacity: .4;
+}
+
+.filter-button:hover {
+  opacity: .9;
+}
+

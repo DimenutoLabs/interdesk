@@ -33,69 +33,15 @@
                 </div>
             </div>
         </div>
-        {{--<div class="row">--}}
-            {{--<div class="col-md-8">--}}
-                {{--<div class="card">--}}
-                    {{--<div class="card-header"><i class="fa fa-bar-chart"></i> {{ __('messages.welcome') }}</div>--}}
-                    {{--<div class="card-body">--}}
-                        {{--corpo--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="col-md-4">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-12">--}}
-                        {{--<form method="post">--}}
-                            {{--<div class="input-group mb-3">--}}
-                                {{--<input type="text" class="form-control" placeholder="{{ __('messages.search_tickets') }}" aria-label="Recipient's username" aria-describedby="basic-addon2">--}}
-                                {{--<div class="input-group-append">--}}
-                                    {{--<span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</form>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-12 margin-top-20">--}}
-                        {{--<div class="card">--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-12"><i class="fa fa-user fa-fw"></i> {{ \Auth::user()->name }}</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-10"><i class="fa fa-envelope fa-fw"></i> {{ \Auth::user()->email }}</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-12 margin-top-20">--}}
-                        {{--<div class="card">--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-12">--}}
-                                        {{--<span>0</span> {{ __('messages.opened_tickets')}}--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-12">--}}
-                                        {{--<span>0</span> {{ __('messages.unassigned_tickets')}}--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="card-footer">--}}
-                                {{--aaa--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-12 margin-top-20">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-12 col-md-6">--}}
-                                {{--<a href="{{ route('ticket.create') }}"><button class="btn btn-primary btn-lg btn-block color-white" type="button"><i class="fa fa-plus-circle fa-fw"></i> {{ __('messages.add_ticket') }}</button></a>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-12 col-md-6">--}}
-                                {{--<button class="btn btn-info btn-lg btn-block color-white" type="button"><i class="fa fa-plus-circle fa-fw"></i> {{ __('messages.add_staff') }}</button>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+
+        <div class="filter-button">
+            <a href="{{ route('dashboard.filter') }}">
+            <button type="button" class="btn btn-info" style="color: white !important;">
+                <i class="fa fa-fw fa-filter"></i><br/>
+                Filtros
+            </button>
+            </a>
+        </div>
 
         @php
             $sectionTickets = $tickets["openeds"]["byMe"];

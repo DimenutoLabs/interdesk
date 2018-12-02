@@ -145,19 +145,21 @@
                                                     <div>
                                                         <?php echo $message->message; ?>
                                                     </div>
-                                                    @if ( $message->attachment_id )
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-sm-2 col-3">
-                                                            <img src="https://picsum.photos/200/300/?random&1=1" style="width: 100%;">
+                                                    @if ( $message->attachments->count() )
+                                                        <hr>
+                                                        <div class="row">
+                                                            @foreach( $message->attachments as $attachment )
+                                                                <div class="col-sm-2 col-3">
+                                                                    <div style="background-color: #EEE; padding: 5px;">
+                                                                        <div style="background-color: #FFF; padding: 5px; height: 50px;">
+                                                                            <a href="{{ route('ticket.file.download',$attachment->path) }}" target="__blank">
+                                                                                <{{ $attachment->type }} src="{{ $attachment->src }}" style="max-width: 100%; max-height: 100%">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
-                                                        <div class="col-sm-2 col-3">
-                                                            <img src="https://picsum.photos/200/300/?random&2=2" style="width: 100%;">
-                                                        </div>
-                                                        <div class="col-sm-2 col-3">
-                                                            <img src="https://picsum.photos/200/300/?random&3=3" style="width: 100%;">
-                                                        </div>
-                                                    </div>
                                                     @endif
                                                 </div>
                                             </div>
