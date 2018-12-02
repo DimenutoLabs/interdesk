@@ -21,13 +21,15 @@ class DashboardController extends Controller
                     ->on('observers.user_id', '=', \DB::raw($user->id) );
             })
             ->where(function($query) use ($user) {
-                $query->where('observers.user_id', $user->id)
-                    ->orWhere('tickets.user_id', $user->id)
-                    ->orWhere('tickets.agent_user_id', $user->id);
-            })
-            ->orWhere(function($query) use ($user) {
-                $query->whereNull('tickets.agent_user_id')
-                    ->where('tickets.department_id', $user->department_id);
+                $query->where(function($subQuery) use ($user) {
+                    $subQuery->where('observers.user_id', $user->id)
+                        ->orWhere('tickets.user_id', $user->id)
+                        ->orWhere('tickets.agent_user_id', $user->id);
+                })
+                    ->orWhere(function($subQuery) use ($user) {
+                        $subQuery->whereNull('tickets.agent_user_id')
+                            ->where('tickets.department_id', $user->department_id);
+                    });
             })
             ->orderBy('tickets.id', 'ASC')
             ->get();
@@ -50,6 +52,7 @@ class DashboardController extends Controller
 
         $statusOpened = Status::where('action', __('messages.ticket_action_create'))->first();
         $statusClosed = Status::where('action', __('messages.ticket_action_close'))->first();
+        $statusExpired = Status::where('action', __('messages.ticket_status_expired'))->first();
 
         $tickets = [
             "openeds" => [
@@ -64,8 +67,9 @@ class DashboardController extends Controller
                 "orphans" => []
             ],
             "expireds" => [
-                "myTickets" => [],
-                "observedTickets" => [],
+                "mine" => [],
+                "observeds" => [],
+                "orphans" => [],
             ],
         ];
 
@@ -88,9 +92,16 @@ class DashboardController extends Controller
                 } else {
                     array_unshift($tickets["closeds"]["orphans"], $ticket);
                 }
+            } else if ( $ticket->status_id == $statusExpired->id ) {
+                if ( $ticket->user_id == $user->id || $ticket->agent_user_id == $user->id ) {
+                    array_unshift($tickets["expireds"]["mine"], $ticket);
+                } else if ( $ticket->observer_id == $user->id ) {
+                    array_unshift($tickets["expireds"]["observeds"], $ticket);
+                } else {
+                    array_unshift($tickets["expireds"]["orphans"], $ticket);
+                }
             }
         }
-
 
         return view('dashboard.index')
             ->with('tickets', $tickets)

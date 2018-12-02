@@ -47,6 +47,12 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            <li class="nav-item" style="position: relative">
+                                <a class="nav-link" href="{{ route('notifications.list') }}"><i class="fa fa-fw fa-bell fa-fw"></i></a>
+                                @if ( $total = (new \App\Http\Controllers\NotificationController())->number() )
+                                    <div style="position: absolute; bottom: 2px; right: 0; background-color: #F00; width: 16px; height: 16px; font-size: 12px; line-height: 16px; text-align: center; color: #FFF; border-radius: 8px; opacity: .7">{{ $total }}</div>
+                                @endif
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('ticket.create') }}"><i class="fa fa-plus-circle fa-fw"></i> Chamado</a>
                             </li>
@@ -78,7 +84,12 @@
             @yield('content')
         </main>
     </div>
-    <div id="preloader" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 99999999; background-color: #FFF"></div>
+    <div id="preloader" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 999; background-color: #FFF">
+        <div style="position: fixed; top: 50%; left: 50%; margin-left: -193px; margin-top: -193px; z-index: 1000; text-align: center; width: 386px; height: 386px;">
+            <img src="/images/logo.png"><br>
+            <h4>Carregando...</h4>
+        </div>
+    </div>
     <!-- Scripts -->
     <script src="{{ asset('js/footer.js') }}?v={{ microtime() }}" ></script>
     @yield('footer-js')

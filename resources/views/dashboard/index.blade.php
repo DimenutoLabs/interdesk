@@ -94,7 +94,7 @@
 @section('footer-js')
     <script>
         @foreach( $tickets["closeds"]["mine"] as $ticket )
-            @if ($ticket->rating == null && $ticket->user_id == \Auth::user()->id )
+            @if ($ticket->rating === null && $ticket->user_id == \Auth::user()->id )
                 $('#rating-{{ $ticket->id }}').starrr({
                     change: function(e, value) {
                         var ticket = e.currentTarget.getAttribute('data-ticket');

@@ -36,6 +36,12 @@ class NotificationController extends Controller
         }
     }
 
+    public function number() {
+        return $notifications = Notification::where('user_id', \Auth::user()->id)
+                ->where('read', false)
+                ->count();
+    }
+
     public function list() {
 
         $notifications = Notification::where('user_id', \Auth::user()->id)

@@ -53,6 +53,7 @@ class TicketController extends Controller
                             ->where('ticket_id', $id)
                             ->where('read', false)
                             ->get();
+
         foreach( $notifications as $notification ) {
             $notification->read = true;
             $notification->save();
@@ -85,6 +86,32 @@ class TicketController extends Controller
         }
         $ticket->save();
 
+        if ( $ticket->agent_user_id ) {
+            $notification = new Notification();
+            $notification->ticket_id = $ticket->id;
+            $notification->user_id = $ticket->user_id == $request->user()->id ? $ticket->agent_user_id : $ticket->user_id;
+            $notification->read = false;
+            $notification->message = "Foi aberto um novo chamado para você.";
+            $notification->url = "/ticket/" . $ticket->id . "/edit";
+            $notification->save();
+        } else {
+            $department = $ticket->department_id;
+            $departmentUsers = User::where('department_id', $department)->get();
+            foreach( $departmentUsers as $departmentUser ) {
+                if ( $departmentUser->id == \Auth::user()->id ) {
+                    continue;
+                }
+
+                $notification = new Notification();
+                $notification->ticket_id = $ticket->id;
+                $notification->user_id = $departmentUser->id;
+                $notification->read = false;
+                $notification->message = "Foi aberto um novo chamado para seu setor.";
+                $notification->url = "/ticket/" . $ticket->id . "/edit";
+                $notification->save();
+            }
+        }
+
         if ( $observers = $request->get('observers') ) {
             foreach( $observers as $user ) {
                 if ( !$user ) {
@@ -94,6 +121,14 @@ class TicketController extends Controller
                 $observer->ticket_id = $ticket->id;
                 $observer->user_id = $user;
                 $observer->save();
+
+                $notification = new Notification();
+                $notification->ticket_id = $ticket->id;
+                $notification->user_id = $user;
+                $notification->read = false;
+                $notification->message = "Foi aberto um novo onde você é observador";
+                $notification->url = "/ticket/" . $ticket->id . "/edit";
+                $notification->save();
             }
         }
 
@@ -134,14 +169,32 @@ class TicketController extends Controller
         $message->message = $request->reply_content;
         $message->save();
 
-        $notification = new Notification();
-        $notification->ticket_id = $id;
-        $notification->user_id = $ticket->user_id == $request->user()->id ? $ticket->agent_user_id : $ticket->user_id;
-        $notification->read = false;
-        $notification->message = "Respondeu um chamado que você participa";
-        $notification->url = route('ticket.update', $ticket->id);
-        $notification->save();
+        if ( $ticket->agent_user_id ) {
+            $notification = new Notification();
+            $notification->ticket_id = $id;
+            $notification->user_id = $ticket->user_id == $request->user()->id ? $ticket->agent_user_id : $ticket->user_id;
+            $notification->read = false;
+            $notification->message = "Foi respondido um chamado que você participa";
+            $notification->url = route('ticket.update', $ticket->id);
+            $notification->save();
+        } else {
+            $department = $ticket->department_id;
+            $departmentUsers = User::where('department_id', $department)->get();
 
+            foreach( $departmentUsers as $departmentUser ) {
+                if ( $departmentUser->id == \Auth::user()->id ) {
+                    continue;
+                }
+
+                $notification = new Notification();
+                $notification->ticket_id = $ticket->id;
+                $notification->user_id = $departmentUser->id;
+                $notification->read = false;
+                $notification->message = "Foi respondido um chamado para o seu setor.";
+                $notification->url = "/ticket/" . $ticket->id . "/edit";
+                $notification->save();
+            }
+        }
 
 
         if ( $files = $request->file('attachments') ) {
@@ -204,6 +257,14 @@ class TicketController extends Controller
             $ticket->save();
         }
 
+        $notification = new Notification();
+        $notification->ticket_id = $ticket->id;
+        $notification->user_id = $ticket->user_id == $request->user()->id ? $ticket->agent_user_id : $ticket->user_id;
+        $notification->read = false;
+        $notification->message = "Um chamado que você participa foi fechado.";
+        $notification->url = "/ticket/" . $ticket->id . "/edit";
+        $notification->save();
+
         $message = __('messages.log_ticket_status_change');
         $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
         $message = str_replace("{%1}", $status->name, $message);
@@ -229,6 +290,14 @@ class TicketController extends Controller
         } else {
             abort(400);
         }
+
+        $notification = new Notification();
+        $notification->ticket_id = $ticket->id;
+        $notification->user_id = $ticket->agent_user_id;
+        $notification->read = false;
+        $notification->message = "Foi dado uma nota em um chamado que você é responsável.";
+        $notification->url = "/ticket/" . $ticket->id . "/edit";
+        $notification->save();
 
         $message = __('messages.log_ticket_rated');
         $message = str_replace("{%0}", $request->user()->name . " (#" . $request->user()->id . ")", $message);
