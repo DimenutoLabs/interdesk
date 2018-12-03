@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header"><i class="fa fa-bar-chart"></i> {{ $sectionName }} ({{ count($sectionTickets) }})</div>
             <div class="card-body">
-                <table class="table table-hover table-bordered table-striped table-responsive" style="width: 100%">
+                <table class="table table-hover table-bordered table-striped table-responsive w-100 d-block d-md-table">
 
                     @if ( count($sectionTickets) )
                         <tr style="background-color: gray; color: #FFF" class="text-center">
