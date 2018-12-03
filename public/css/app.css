@@ -16330,6 +16330,7 @@ a.text-dark:focus {
   top: 10%;
   right: -5px;
   opacity: .4;
+  z-index: 999;
 }
 
 .filter-button:hover {
