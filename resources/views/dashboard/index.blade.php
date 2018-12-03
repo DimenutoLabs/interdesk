@@ -88,6 +88,13 @@
         @endphp
         @include('dashboard.section')
 
+        @php
+            $sectionTickets = $tickets["expireds"]["mine"];
+            $sectionName = "Meus chamados expirados.";
+            $hideIfBlank = true;
+        @endphp
+        @include('dashboard.section')
+
     </div>
 @endsection
 

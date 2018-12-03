@@ -15,7 +15,6 @@ class UpdateTableUsersAddColumnDepartment extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('department_id')->unsigned()->after('is_admin')->default(1);
-            $table->string('avatar')->nullable()->after('department_id');
 
             $table->foreign('department_id', 'user_fk_department')->references('id')->on('departments');
         });
@@ -29,8 +28,8 @@ class UpdateTableUsersAddColumnDepartment extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('user_fk_department');
             $table->dropColumn('department_id');
-            $table->dropColumn('avatar');
         });
     }
 }

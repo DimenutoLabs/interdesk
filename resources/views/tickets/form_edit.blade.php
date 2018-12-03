@@ -248,11 +248,11 @@
 
 @section('footer-js')
     <script src="{{ asset('js/editticket.js') }}?v={{ microtime() }}"></script>
-    @if ( ($ticket->agent_user_id != \Auth::user()->id && $ticket->user_id != \Auth::user()->id) || $ticket->status->name == __('messages.ticket_status_closed') )
+    @if ( ($ticket->agent_user_id != \Auth::user()->id && $ticket->user_id != \Auth::user()->id) || $ticket->status->name != __('messages.ticket_status_created') )
     <script>
-        @if ($ticket->status->name == __('messages.ticket_status_closed'))
-        $('div[contenteditable="true"]').css('background', '#EEE').html('Você não pode mais enviar mensagens pois o chamado está fechado.').on('click', function() {
-            $(this).html('Você não pode mais enviar mensagens pois o chamado está fechado.').blur();
+        @if ($ticket->status->name != __('messages.ticket_status_created'))
+        $('div[contenteditable="true"]').css('background', '#EEE').html('Você não pode enviar mensagens pois o chamado não está aberto.').on('click', function() {
+            $(this).html('Você não pode enviar mensagens pois o chamado não está aberto.').blur();
         });
         @else
         $('div[contenteditable="true"]').css('background', '#EEE').html('Você não pode enviar mensagens neste ticket pois não é responsável pelo mesmo.').on('click', function() {
