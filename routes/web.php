@@ -56,13 +56,15 @@ Route::group([
     $route->get('notifications', 'NotificationController@index')->name('notifications');
     $route->get('notifications/list', 'NotificationController@list')->name('notifications.list');
 
+    Route::get('/password/change', 'ProfileController@change')->name('password.change');
+    Route::post('/password/change', 'ProfileController@save');
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function() {
+    return redirect( route('dashboard') );
+})->name('home');
 
-Route::get('/password/change', 'ProfileController@change')->name('password.change');
-Route::post('/password/change', 'ProfileController@save');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

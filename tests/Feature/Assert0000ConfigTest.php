@@ -8,7 +8,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AssertConfigTest extends TestCase
+class Assert0000ConfigTest extends TestCase
 {
     /**
      * A basic test example.
@@ -17,14 +17,11 @@ class AssertConfigTest extends TestCase
      */
     public function testExample()
     {
-//        try {
-//            Artisan::call('migrate:refresh');
-//        } catch (\Exception $e) {
-//            $output = Artisan::output();
-//            print_r( $output );
-//            echo $e->getMessage();
-//            $this->assertTrue(false);
-//        }
+//        /*echo "Making migrations refresh";
+        Artisan::call('migrate:refresh');
+
+        echo "Making seed";
+        Artisan::call('db:seed');
         $this->assertTrue(true);
     }
 }
