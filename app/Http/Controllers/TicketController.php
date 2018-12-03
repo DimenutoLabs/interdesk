@@ -175,7 +175,7 @@ class TicketController extends Controller
             $notification->user_id = $ticket->user_id == $request->user()->id ? $ticket->agent_user_id : $ticket->user_id;
             $notification->read = false;
             $notification->message = "Foi respondido um chamado que você participa";
-            $notification->url = route('ticket.update', $ticket->id);
+            $notification->url = "/ticket/" . $ticket->id . "/edit";
             $notification->save();
         } else {
             $department = $ticket->department_id;
