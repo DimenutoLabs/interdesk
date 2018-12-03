@@ -95,6 +95,20 @@
         @endphp
         @include('dashboard.section')
 
+        @php
+            $sectionTickets = $tickets["expireds"]["observeds"];
+            $sectionName = "Chamados que observo expirados.";
+            $hideIfBlank = true;
+        @endphp
+        @include('dashboard.section')
+
+        @php
+            $sectionTickets = $tickets["expireds"]["orphans"];
+            $sectionName = "Chamados que não participo expirados.";
+            $hideIfBlank = true;
+        @endphp
+        @include('dashboard.section')
+
     </div>
 @endsection
 
