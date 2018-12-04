@@ -14,19 +14,6 @@ class Authenticate extends Middleware
      * @return string
      */
 
-
-    public function handle($request, Closure $next, ...$guards)
-    {
-
-        if ($request->user() && $request->user()->force_update_password) {
-            return redirect( route('password.change') );
-        }
-
-        $this->authenticate($request, $guards);
-
-        return $next($request);
-    }
-
     protected function redirectTo($request)
     {
         return route('login');
