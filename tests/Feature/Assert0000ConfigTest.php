@@ -18,10 +18,10 @@ class Assert0000ConfigTest extends TestCase
     public function testExample()
     {
 //        /*echo "Making migrations refresh";
-//        Artisan::call('migrate:refresh');
+        Artisan::call('migrate:refresh');
 
-//        echo "Making seed";
-//        Artisan::call('db:seed');
+        echo "Making seed";
+        Artisan::call('db:seed');
         $this->assertTrue(true);
     }
 }

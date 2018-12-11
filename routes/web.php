@@ -47,6 +47,7 @@ Route::group([
 
 
     $route->post('/ticket', 'TicketController@save')->name('ticket.save');
+    $route->post('/ticket/update-date-prior/{id}', 'TicketController@saveDateAndPriorChanges')->name('ticket.update.date.prior');
     $route->post('/ticket/upload', 'TicketController@uploadFile')->name('ticket.upload');
     $route->post('/ticket/{id}', 'TicketController@update')->name('ticket.update');
 

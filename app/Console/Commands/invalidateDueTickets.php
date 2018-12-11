@@ -54,7 +54,7 @@ class invalidateDueTickets extends Command
 
         $tickets->update([
                 "status_id" => Status::where('name', __('messages.ticket_status_expired'))->first()->id,
-                "rating" => 0
+                "rating" => null
         ]);
 
         $this->error("Expiring " . $dueOpeneds . " tickets");

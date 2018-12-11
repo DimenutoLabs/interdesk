@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@section('header-js')
+<style>
+    .ui-datepicker {
+        z-index: 4000 !important;
+    }
+    .select2, .select2-container, .select2-container--default, .select2-container--focus {
+        width: 100% !important
+    }
+</style>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -32,8 +43,8 @@
                                     @elseif ( $ticket->status->action == __('messages.ticket_action_create') )
                                         @if ( $ticket->user_id == \Auth::user()->id )
                                             <div class="dropdown-item" id="close-ticket" style="cursor: pointer">Fechar</div>
+                                            <div class="dropdown-item" id="edit-ticket"  data-toggle="modal" data-target="#exampleModal" style="cursor: pointer">Editar</div>
                                         @elseif ( $ticket->agent_user_id == \Auth::user()->id )
-
                                         @endif
                                         {{--<a class="dropdown-item" href="#">Colocar em Espera</a>--}}
                                         {{--<div class="dropdown-divider"></div>--}}
@@ -48,13 +59,19 @@
                     <div class="card-header" style="background-color: #F4F4FF">
                         <div class="row">
                             @if ($ticket->agent_user_id)
-                            <div class="col-6">
+                            <div class="col-5">
                                 <div>Responsável:</div>
                                 <div><i class="fa fa-user fa-fw"></i> {{ $ticket->agent->name }} ({{ $ticket->agent->email }})</div>
                             </div>
                             @endif
+                            <div class="col-2">
+                                Expiração:
+                                @if ($ticket->limit_date)
+                                    <div class="font-14"><i class="fa fa-calendar fa-fw"></i> {{ preg_replace("/^(....).(..).(..)$/", "$3/$2/$1", $ticket->limit_date) }}</div>
+                                @endif
+                            </div>
                             @if ( $ticket->observers->count() )
-                            <div class="col-6">
+                            <div class="col-5">
                                 <div>Observadores:</div>
                                 @foreach( $ticket->observers as $observer )
                                 <div><i class="fa fa-user fa-fw"></i> {{ $observer->user->name }} ({{ $observer->user->email }})</div>
@@ -244,6 +261,50 @@
             @endif
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post" action="{{ route("ticket.update.date.prior", [$ticket->id]) }}">
+            {{ csrf_field() }}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterações no chamado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="limit_date">Data de expiração:</label>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control datepicker" id="limit_date" name="limit_date" value="{{ preg_replace("/^(....).(..).(..)$/", "$3/$2/$1", $ticket->limit_date ) }}">
+                            <div class="input-group-append">
+                                <div class="input-group-text" data-focus-to="limit_date"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">Após esta data o chamado será expirará e será solicitado atribuição de nota.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prior">{{ __('messages.prior') }} <b class="color-red">*</b></label><br/>
+                        <select class="form-control selectpicker" id="prior" name="prior" data-field_name="{{__('messages.field_new_ticket_prior')}}">
+                            @foreach( $priors as $prior )
+                                <option value="{{ $prior->id }}" @if ( $prior->id == $ticket->prior_id ) selected @endif {{ $prior->default ? "selected" : "" }}>{{ $prior->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
 @endsection
 
 @section('footer-js')
@@ -267,6 +328,11 @@
             if ( confirm("Deseja realmente fechar este chamado?") ) {
                 window.location.href = "{{ route('ticket.close', $ticket->id) }}"
             }
-        })
+        });
+        $('#edit-ticket').click(function() {
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        });
     </script>
 @endsection

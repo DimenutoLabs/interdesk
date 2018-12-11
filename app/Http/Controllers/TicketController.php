@@ -40,6 +40,7 @@ class TicketController extends Controller
     public function edit($id) {
         $ticket = Ticket::find($id);
         $status = Status::all();
+        $priors = Prior::all();
 
         $access = new UserTicketAccess();
         $access->user_id = \Auth::user()->id;
@@ -62,7 +63,23 @@ class TicketController extends Controller
         return view('tickets.form_edit')
             ->with('ticket', $ticket)
             ->with('status', $status)
+            ->with('priors', $priors)
             ->with('logs', $logs);
+    }
+
+    public function saveDateAndPriorChanges(Request $request, $ticketId) {
+        \DB::beginTransaction();
+        $ticket = Ticket::findOrFail($ticketId);
+        if ( $date = $request->get('limit_date') ) {
+            $ticket->limit_date = preg_replace("/^(..).(..).(....)$/", "$3-$2-$1", $date);
+        }
+        if ( $prior = $request->get('prior') ) {
+            $ticket->prior_id = $prior;
+        }
+        $ticket->save();
+        \DB::commit();
+
+        return redirect( route('ticket.edit', [$ticket->id]) );
     }
 
     public function save(Request $request) {
