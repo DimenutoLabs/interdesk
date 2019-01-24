@@ -68,6 +68,7 @@ class TicketController extends Controller
     }
 
     public function saveDateAndPriorChanges(Request $request, $ticketId) {
+
         \DB::beginTransaction();
         $ticket = Ticket::findOrFail($ticketId);
         if ( $date = $request->get('limit_date') ) {
@@ -75,6 +76,12 @@ class TicketController extends Controller
         }
         if ( $prior = $request->get('prior') ) {
             $ticket->prior_id = $prior;
+        }
+        if ( $request->get('status') && $request->user()->is_admin ) {
+            $ticket->status_id = $request->get('status');
+        }
+        if ( $nota = $request->get('remove_rating') ) {
+            $ticket->rating = null;
         }
         $ticket->save();
         \DB::commit();

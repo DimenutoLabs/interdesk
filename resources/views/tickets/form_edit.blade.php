@@ -53,6 +53,17 @@
                                 </div>
                             </div>
                         </div>
+                        @elseif (\Auth::user()->is_admin)
+                            <div class="float-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ $ticket->status->name }}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <div class="dropdown-item" id="edit-ticket"  data-toggle="modal" data-target="#exampleModal" style="cursor: pointer">Editar</div>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     </div>
                     @if ( $ticket->agent_user_id || $ticket->observers->count() )
@@ -291,10 +302,27 @@
                         <label for="prior">{{ __('messages.prior') }} <b class="color-red">*</b></label><br/>
                         <select class="form-control selectpicker" id="prior" name="prior" data-field_name="{{__('messages.field_new_ticket_prior')}}">
                             @foreach( $priors as $prior )
-                                <option value="{{ $prior->id }}" @if ( $prior->id == $ticket->prior_id ) selected @endif {{ $prior->default ? "selected" : "" }}>{{ $prior->name }}</option>
+                                <option value="{{ $prior->id }}" @if ( $prior->id == $ticket->prior_id ) selected @else {{ $prior->default ? "selected" : "" }} @endif>{{ $prior->name }}</option>
                             @endforeach
                         </select>
                     </div>
+
+                    @if (\Auth::user()->is_admin)
+                    <div class="form-group">
+                        <label for="status">Situação do Chamado<b class="color-red">*</b></label><br/>
+                        <select class="form-control selectpicker" id="status" name="status">
+                            @foreach( $status as $statu )
+                                <option value="{{ $statu->id }}" @if ( $statu->id == $ticket->status_id ) selected @endif>{{ $statu->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                        @if ($ticket->rating !== null )
+                        <div class="form-group">
+                            <label for="remove_rating"><input type="checkbox" value="1" name="remove_rating" id="remove_rating"> Remover Nota</label><br/>
+                        </div>
+                        @endif
+                    @endif
 
                 </div>
                 <div class="modal-footer">

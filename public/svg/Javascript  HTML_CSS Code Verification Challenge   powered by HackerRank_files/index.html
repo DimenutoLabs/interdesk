@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html data-framework="javascript" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Calendar App</title>
+		<link rel="stylesheet" href="index_data/calendar.css">
+	</head>
+	<body>
+        <div class="container">
+            <button type="button" id="last-month"> &lt;&lt; </button>
+            <button type="button" id="next-month"> &gt;&gt; </button>
+            <div class="clearfix"></div>
+            <div id="calendar">
+                <table id="calendar-table" cellspacing="0">
+                    <thead>
+                        <tr id="date-stamp">
+                            <th colspan="7">
+                                <span id="current-month">December</span>
+                                <span id="current-year">2018</span>
+                            </th>
+                        </tr>
+                        <tr id="days-of-week">
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content-dates">
+                        <tr style="display: table-row;">
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>1</td>
+                        </tr>
+                        <tr style="display: table-row;">
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                        </tr>
+                        <tr style="display: table-row;">
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td>15</td>
+                        </tr>
+                        <tr style="display: table-row;">
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                            <td>22</td>
+                        </tr>
+                        <tr style="display: table-row;">
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                            <td>29</td>
+                        </tr>
+                        <tr style="display: table-row;">
+                            <td>30</td>
+                            <td>31</td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3>New Appointment</h3>
+                <div>
+                    <label for="appointment-title" class="label-text">Appointment Title</label><br>
+                    <input type="text" class="input-text" id="appointment-title" placeholder="Title"><br>
+
+                    <label for="appointment-date" class="label-text">Appointment Date</label><br>
+                    <input type="text" class="input-text" id="appointment-date" placeholder="__/__/___" maxlength="10" value="12/26/2018"><br>
+                    <button type="button" id="save-appointment">Salvar</button>
+                    <button type="button" id="delete-appointment" class="d-none btn-danger">Deletar</button>
+                </div>
+            </div>
+        </div>
+		<script src="index_data/calendar.js"></script>
+	
+
+</body></html>

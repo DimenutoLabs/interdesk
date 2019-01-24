@@ -1,0 +1,63 @@
+tr {
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #777;
+    padding: 5px;
+    text-align: center;
+    width: 40px;
+}
+
+table {
+    width: 280px;
+    background-color: #EEF;
+    font: 12px/12px arial;
+    table-layout: fixed;
+}
+
+th {
+    background-color: #AAF;
+}
+
+td {
+    cursor: pointer;
+}
+
+.input-text {
+    padding: 5px;
+    border: 1px solid #DDD;
+    border-radius: 7px;
+    margin-bottom: 15px;
+}
+
+.label-text {
+    color: #555;
+    font: bold 12px/16px Arial;
+}
+
+.d-none {
+    display: none;
+}
+
+.btn-danger {
+    background-color: #900;
+    color: white;
+}
+
+.container {
+    width: 281px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+#next-month {
+    float: right;
+}
+
+#last-month {
+    float: left;
+}
+.clearfix {
+    clear: both;
+}
