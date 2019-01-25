@@ -36,6 +36,10 @@ class Ticket extends Model
         return $this->hasMany(Observer::class);
     }
 
+    public function lastAccess() {
+        return $this->hasOne(UserTicketAccess::class)->orderBy('id', 'DESC');
+    }
+
     public function agentUserId() {
         return $this->agent();
     }
@@ -85,29 +89,29 @@ class Ticket extends Model
         return $attachments;
     }
 
-    public function getLastActionsAttribute() {
-
-        $access = UserTicketAccess::where('user_id', \Auth::user()->id)
-            ->where('ticket_id', $this->id )
-            ->orderBy('created_at', 'DESC')
-            ->first();
-
-        $lastAccess = "0000-00-00 00:00:00";
-        $numberOfAlerts = 0;
-
-        if ( $access == null ) {
-            $numberOfAlerts++;
-        } else {
-            $lastAccess = $access->created_at->format('Y-m-d H:i:s');
-        }
-
-        $messages = Message::where('created_at', '>', $lastAccess)
-            ->where('ticket_id', $this->id)
-            ->get();
-
-        $numberOfAlerts += $messages->count();
-
-        return $numberOfAlerts;
-    }
+//    public function getLastActionsAttribute() {
+//
+//        $access = UserTicketAccess::where('user_id', \Auth::user()->id)
+//            ->where('ticket_id', $this->id )
+//            ->orderBy('created_at', 'DESC')
+//            ->first();
+//
+//        $lastAccess = "0000-00-00 00:00:00";
+//        $numberOfAlerts = 0;
+//
+//        if ( $access == null ) {
+//            $numberOfAlerts++;
+//        } else {
+//            $lastAccess = $access->created_at->format('Y-m-d H:i:s');
+//        }
+//
+//        $messages = Message::where('created_at', '>', $lastAccess)
+//            ->where('ticket_id', $this->id)
+//            ->get();
+//
+//        $numberOfAlerts += $messages->count();
+//
+//        return $numberOfAlerts;
+//    }
 
 }

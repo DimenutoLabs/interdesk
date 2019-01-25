@@ -94,17 +94,18 @@
                             <td>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="">{{ $ticket->messages->last() ? $ticket->messages->last()->user->name : ""  }}</div>
-                                        <div class="color-gray font-12 line-26">{{ $ticket->messages->last() ? $ticket->messages->last()->created_at->format('d/m/Y @ H:i') : ""  }}</div>
+                                        {{--<div class="">{{ $ticket->messages->last() ? $ticket->messages->last()->user->name : ""  }}</div>--}}
+                                        {{--<div class="color-gray font-12 line-26">{{ $ticket->messages->last() ? $ticket->messages->last()->created_at->format('d/m/Y @ H:i') : ""  }}</div>--}}
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 @if ($ticket->status_id == $statusOpened->id)
                                 <div class="text-center">
-                                    @if( $number = $ticket->last_actions)
-                                        <button class="btn btn-danger btn-sm"><i class="fa fa-exclamation-circle fa-fw"></i> {{ $number }}</button>
-                                    @endif
+                                    {{ $ticket->lastAccess }}
+{{--                                    @if( $number = $ticket->last_actions)--}}
+                                        {{--<button class="btn btn-danger btn-sm"><i class="fa fa-exclamation-circle fa-fw"></i> {{ $number }}</button>--}}
+                                    {{--@endif--}}
                                 </div>
                                 @else
                                 <div class="text-center color-blue-star" id="rating-{{$ticket->id}}" data-ticket="{{ $ticket->id }}">

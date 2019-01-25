@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Department;
+use App\Models\Message;
 use App\Models\Ticket;
 use App\User;
 use Faker\Factory;
@@ -58,7 +59,8 @@ class DummyCommand extends Command
         $roles = $this->createRoles(5);
         $departments = $this->createDepartments(10);
         $users = $this->createUsers(30, $roles, $departments);
-        $this->createTickets(1000, $users, $departments);
+        $tickets = $this->createTickets(1000, $users, $departments);
+        $this->createMessages($this->faker->numberBetween(1,5), $tickets);
     }
 
     private function createRoles($ammount)
@@ -135,5 +137,21 @@ class DummyCommand extends Command
         }
 
         return $tickets;
+    }
+
+    private function createMessages($ammount, &$tickets)
+    {
+        $messages = [];
+        foreach($tickets as $ticket) {
+            foreach( range(1,$ammount) as $i) {
+                $message = new Message;
+                $message->user_id = $this->faker->randomElement([ $ticket->user_id, $tickets->agent_id ]);
+                $message->ticket_id = $ticket->id;
+                $message->message = $this->faker->text(50);
+                $message->save();
+                $messages[] = $message;
+            }
+        }
+        return $messages;
     }
 }

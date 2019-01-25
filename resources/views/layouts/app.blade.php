@@ -121,9 +121,9 @@
 
         }
 
-        setInterval(function() {
-            getNotifications();
-        }, 120000);
+        // setInterval(function() {
+        //     getNotifications();
+        // }, 120000);
         function getNotifications() {
             $.get('/notifications')
                 .done(function(e) {
@@ -137,7 +137,7 @@
                 })
         }
 
-        getNotifications();
+        // getNotifications();
     </script>
 </body>
 </html>

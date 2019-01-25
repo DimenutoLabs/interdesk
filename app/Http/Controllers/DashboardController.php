@@ -15,35 +15,46 @@ class DashboardController extends Controller
         $user = \Auth::user();
 
 
-        $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
-            ->leftJoin('observers', function($join) use ($user) {
-                $join->on('observers.ticket_id', 'tickets.id')
-                    ->on('observers.user_id', '=', \DB::raw($user->id) );
-            })
-            ->where(function($query) use ($user) {
-                $query->where(function($subQuery) use ($user) {
-                    $subQuery->where('observers.user_id', $user->id)
-                        ->orWhere('tickets.user_id', $user->id)
-                        ->orWhere('tickets.agent_user_id', $user->id);
-                })
-                    ->orWhere(function($subQuery) use ($user) {
-                        $subQuery->whereNull('tickets.agent_user_id')
-                            ->where('tickets.department_id', $user->department_id);
-                    });
-            })
-            ->orderBy('tickets.id', 'ASC')
+//        $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
+//            ->leftJoin('observers', function($join) use ($user) {
+//                $join->on('observers.ticket_id', 'tickets.id')
+//                    ->on('observers.user_id', '=', \DB::raw($user->id) );
+//            })
+//            ->where(function($query) use ($user) {
+//                $query->where(function($subQuery) use ($user) {
+//                    $subQuery->where('observers.user_id', $user->id)
+//                        ->orWhere('tickets.user_id', $user->id)
+//                        ->orWhere('tickets.agent_user_id', $user->id);
+//                })
+//                    ->orWhere(function($subQuery) use ($user) {
+//                        $subQuery->whereNull('tickets.agent_user_id')
+//                            ->where('tickets.department_id', $user->department_id);
+//                    });
+//            })
+//            ->orderBy('tickets.id', 'ASC')
+//            ->toSql();
+
+        $ticketsCollection = Ticket::with([
+                'observers',
+                'status',
+                'department',
+                'prior',
+                'user',
+                'agent',
+                'messages',
+                'lastAccess',
+            ])
             ->get();
 
-
-        if (\Auth::user()->is_admin) {
-            $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
-                ->leftJoin('observers', function($join) use ($user) {
-                    $join->on('observers.ticket_id', 'tickets.id')
-                        ->on('observers.user_id', '=', \DB::raw($user->id) );
-                })
-                ->orderBy('tickets.id', 'ASC')
-                ->get();
-        }
+//        if (\Auth::user()->is_admin) {
+//            $ticketsCollection = Ticket::select('tickets.*', 'observers.user_id as observer_id')
+//                ->leftJoin('observers', function($join) use ($user) {
+//                    $join->on('observers.ticket_id', 'tickets.id')
+//                        ->on('observers.user_id', '=', \DB::raw($user->id) );
+//                })
+//                ->orderBy('tickets.id', 'ASC')
+//                ->get();
+//        }
 
         return $this->getTickets($ticketsCollection, $user);
     }
