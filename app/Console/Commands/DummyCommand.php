@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Department;
 use App\Models\Message;
+use App\Models\Observer;
 use App\Models\Ticket;
+use App\Models\UserTicketAccess;
 use App\User;
 use Faker\Factory;
 use Faker\Generator;
@@ -60,7 +62,9 @@ class DummyCommand extends Command
         $departments = $this->createDepartments(10);
         $users = $this->createUsers(30, $roles, $departments);
         $tickets = $this->createTickets(1000, $users, $departments);
-        $this->createMessages($this->faker->numberBetween(1,5), $tickets);
+        $this->createMessages(5, $tickets);
+        $this->createAccess($tickets);
+        $this->createObservers($tickets, $users);
     }
 
     private function createRoles($ammount)
@@ -143,15 +147,42 @@ class DummyCommand extends Command
     {
         $messages = [];
         foreach($tickets as $ticket) {
-            foreach( range(1,$ammount) as $i) {
+            foreach( range(1, $this->faker->numberBetween(1,$ammount)) as $i) {
                 $message = new Message;
-                $message->user_id = $this->faker->randomElement([ $ticket->user_id, $tickets->agent_id ]);
+                $message->user_id = $this->faker->randomElement([ $ticket->user_id, $ticket->agent_id ]) ?: $ticket->user_id;
                 $message->ticket_id = $ticket->id;
                 $message->message = $this->faker->text(50);
+                $message->created_at = $this->faker->dateTimeThisMonth();
                 $message->save();
                 $messages[] = $message;
             }
         }
         return $messages;
+    }
+
+    private function createAccess(&$tickets) {
+//        $access = [];
+//        foreach($tickets as $ticket) {
+//            $acces = new UserTicketAccess;
+//            $acces->user_id =
+//        }
+//        return $access;
+    }
+
+    private function createObservers(&$tickets, &$users)
+    {
+        $observers = [];
+
+        foreach($tickets as $ticket) {
+            $observersCollects = $this->faker->randomElements($users, $this->faker->numberBetween(0,3), false);
+            foreach ($observersCollects as $observerCollect ) {
+                $observer = new Observer;
+                $observer->ticket_id = $ticket->id;
+                $observer->user_id = $observerCollect->id;
+                $observer->save();
+                $observers[] = $observer;
+            }
+        }
+        return $observers;
     }
 }

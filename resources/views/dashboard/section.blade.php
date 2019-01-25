@@ -102,10 +102,23 @@
                             <td>
                                 @if ($ticket->status_id == $statusOpened->id)
                                 <div class="text-center">
-                                    {{ $ticket->lastAccess }}
-{{--                                    @if( $number = $ticket->last_actions)--}}
-                                        {{--<button class="btn btn-danger btn-sm"><i class="fa fa-exclamation-circle fa-fw"></i> {{ $number }}</button>--}}
-                                    {{--@endif--}}
+                                    @if ($ticket->messages)
+                                        @php
+                                            $number = 0;
+                                            if ( !$ticket->lastAccess ) {
+                                                $number = $ticket->messages->count();
+                                            } else {
+                                                foreach( $ticket->messages as $ticketMessage) {
+                                                    if ( $ticketMessage->created_at > $ticket->lastAccess->created_at ) {
+                                                        $number++;
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+                                        @if ($number > 0)
+                                        <button class="btn btn-danger btn-sm"><i class="fa fa-exclamation-circle fa-fw"></i> {{ $number }}</button>
+                                        @endif
+                                    @endif
                                 </div>
                                 @else
                                 <div class="text-center color-blue-star" id="rating-{{$ticket->id}}" data-ticket="{{ $ticket->id }}">
