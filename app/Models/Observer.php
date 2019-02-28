@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Observer extends Model
 {
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->whereNull('deleted_at');
     }
 }
