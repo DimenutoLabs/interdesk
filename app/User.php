@@ -33,4 +33,9 @@ class User extends \TCG\Voyager\Models\User
         return $this->belongsTo(Department::class);
     }
 
+    public function newQuery()
+    {
+        return parent::newQuery()->where('should_display', true);
+    }
+
 }
