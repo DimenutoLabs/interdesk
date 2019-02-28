@@ -35,19 +35,4 @@ class User extends \TCG\Voyager\Models\User
         return $this->belongsTo(Department::class);
     }
 
-    public function newQuery()
-    {
-        $adminLogin = \Session::get('admin_login');
-        if (!$adminLogin && $wantsAdmin = \Request::get('admin_login')) {
-            \Session::put('admin_login', $wantsAdmin);
-            $adminLogin = 1;
-        }
-
-        if ( !$adminLogin ) {
-            return parent::newQuery()->where('should_display', true);
-        } else {
-            return parent::newQuery();
-        }
-    }
-
 }

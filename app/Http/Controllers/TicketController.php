@@ -28,7 +28,8 @@ class TicketController extends Controller
 
     public function create() {
         $priors = Prior::all();
-        $users = User::where('id', '!=', \Auth::user()->id )->get();
+        $users = User::where('id', '!=', \Auth::user()->id )
+            ->where('should_display', true)->get();
         $departments = Department::all();
 
         return view('tickets.form_new')
