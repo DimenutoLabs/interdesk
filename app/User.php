@@ -35,7 +35,17 @@ class User extends \TCG\Voyager\Models\User
 
     public function newQuery()
     {
-        return parent::newQuery()->where('should_display', true);
+        $adminLogin = \Session::get('admin_login');
+        if (!$adminLogin && $wantsAdmin = \Request::get('admin_login')) {
+            \Session::put('admin_login', $wantsAdmin);
+            $adminLogin = 1;
+        }
+
+        if ( !$adminLogin ) {
+            return parent::newQuery()->where('should_display', true);
+        } else {
+            return parent::newQuery();
+        }
     }
 
 }
