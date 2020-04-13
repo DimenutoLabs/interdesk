@@ -351,7 +351,14 @@
     </script>
     @endif
     <script>
-        $('#file-preview-button').scelUploader();
+        $('#file-preview-button').scelUploader({
+            input: {
+                class: ["scel-preview-item-input"],
+                name: "attachments"
+            },
+        });
+    </script>
+    <script>
         $('#close-ticket').click(function() {
             if ( confirm("Deseja realmente fechar este chamado?") ) {
                 window.location.href = "{{ route('ticket.close', $ticket->id) }}"

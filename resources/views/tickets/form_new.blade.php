@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <label for="limit_date">{{ __('messages.accept_date') }}</label>
                                         <div class="input-group mb-2">
-                                            <input type="text" class="form-control datepicker" id="limit_date" name="limit_date">
+                                            <input type="text" class="form-control datepicker date" id="limit_date" name="limit_date">
                                             <div class="input-group-append">
                                                 <div class="input-group-text" data-focus-to="limit_date"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -175,6 +175,11 @@
     </script>
 
     <script>
-        $('#file-preview-button').scelUploader();
+        $('#file-preview-button').scelUploader({
+            input: {
+                class: ["scel-preview-item-input"],
+                name: "attachments"
+            },
+        });
     </script>
 @endsection

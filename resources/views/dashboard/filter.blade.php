@@ -29,7 +29,7 @@
                                     <div class="form-group">
                                         <label for="start-date">Data Inicial</label>
                                         <div class="input-group mb-2">
-                                            <input type="text" class="form-control datepicker" id="start-date" name="start-date" value="" autocomplete="off">
+                                            <input type="text" class="form-control date" id="start-date" name="start-date" value="" autocomplete="off">
                                             <div class="input-group-append">
                                                 <div class="input-group-text" data-focus-to="limit_date"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <label for="end-date">Data Final</label>
                                         <div class="input-group mb-2">
-                                            <input type="text" class="form-control datepicker" id="end-date" name="end-date" value="" autocomplete="off">
+                                            <input type="text" class="form-control date" id="end-date" name="end-date" value="" autocomplete="off">
                                             <div class="input-group-append">
                                                 <div class="input-group-text" data-focus-to="limit_date"><i class="fa fa-calendar"></i></div>
                                             </div>
