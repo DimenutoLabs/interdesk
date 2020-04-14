@@ -54,12 +54,6 @@ class UserCommand extends Command
     public function handle()
     {
 
-        if ( env('APP_DEBUG') != true && env('APP_ENV') != 'development')
-        {
-            echo "This command can be used only on develipment enviroment and with debug activated";
-            exit;
-        }
-
         $cpf = UserExtraField::where('name', 'CPF')->first();
         $nascimento = UserExtraField::where('name','Nascimento')->first();
 
