@@ -84,7 +84,6 @@ class UserCommand extends Command
 
         DB::commit();
 
-        dd( $cpf );
     }
 
     private function adminQuestion() : Bool {
