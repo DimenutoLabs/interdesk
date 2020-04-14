@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PriorSeeder::class);
         $this->call(DepartmentSeeder::class);
         $this->call(StatusSeeder::class);
+        $this->call(ExtraFieldsSeederTypes::class);
+        $this->call(ExtraFieldsSeeder::class);
     }
 }
