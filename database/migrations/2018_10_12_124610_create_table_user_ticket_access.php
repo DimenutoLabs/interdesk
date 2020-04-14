@@ -14,10 +14,10 @@ class CreateTableUserTicketAccess extends Migration
     public function up()
     {
         Schema::create('user_ticket_access', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 
-            $table->integer('user_id')->unsigned();
-            $table->integer('ticket_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('ticket_id')->unsigned();
 
             $table->timestamps();
             $table->softDeletes();

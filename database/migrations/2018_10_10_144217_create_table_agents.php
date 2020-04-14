@@ -14,10 +14,10 @@ class CreateTableAgents extends Migration
     public function up()
     {
         Schema::create('ticket_users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 
-            $table->integer('user_id')->unsigned();
-            $table->integer('tickets_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('tickets_id')->unsigned();
 
             $table->timestamps();
             $table->softDeletes();

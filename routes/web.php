@@ -30,7 +30,7 @@ Route::group([
         "auth",
         "force.password_change",
     ],
-], function(Router $route) {
+], function (Router $route) {
 
     $route->get('/dashboard', 'DashboardController@index')->name('dashboard');
     $route->post('/dashboard', 'DashboardController@filter')->name('dashboard');
@@ -51,11 +51,11 @@ Route::group([
     $route->post('/ticket/upload', 'TicketController@uploadFile')->name('ticket.upload');
     $route->post('/ticket/{id}', 'TicketController@update')->name('ticket.update');
 
-    $route->get('/profile', function() {
+    $route->get('/profile', function () {
     })->name('profile');
 
-    $route->get('controller_room', 'ControllerRoomController@index' )->name('controller_room');
-    $route->post('controller_room', 'ControllerRoomController@filter' )->name('controller_room');
+    $route->get('controller_room', 'ControllerRoomController@index')->name('controller_room');
+    $route->post('controller_room', 'ControllerRoomController@filter')->name('controller_room');
 
     $route->get('notifications', 'NotificationController@index')->name('notifications');
     $route->get('notifications/list', 'NotificationController@list')->name('notifications.list');
@@ -65,7 +65,7 @@ Route::group([
     "middleware" => [
         "auth",
     ],
-], function(Router $route) {
+], function (Router $route) {
     $route->get('/password/change', 'ProfileController@change')->name('password.change');
     $route->post('/password/change', 'ProfileController@save');
 });
@@ -73,11 +73,7 @@ Route::group([
 
 Auth::routes();
 
-Route::get('/home', function() {
-    return redirect( route('dashboard') );
+Route::get('/home', function () {
+    return redirect(route('dashboard'));
 })->name('home');
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
 

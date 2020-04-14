@@ -14,10 +14,10 @@ class CreateTableTicketObservers extends Migration
     public function up()
     {
         Schema::create('observers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 
-            $table->integer('ticket_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('ticket_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
 
             $table->foreign('ticket_id', 'observers_fk_ticket')->references('id')->on('tickets');
             $table->foreign('user_id', 'observers_fk_user')->references('id')->on('users');

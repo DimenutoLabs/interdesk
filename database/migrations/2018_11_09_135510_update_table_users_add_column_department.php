@@ -14,7 +14,7 @@ class UpdateTableUsersAddColumnDepartment extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('department_id')->unsigned()->after('is_admin')->default(1);
+            $table->bigInteger('department_id')->unsigned()->after('is_admin')->default(1);
 
             $table->foreign('department_id', 'user_fk_department')->references('id')->on('departments');
         });

@@ -14,11 +14,11 @@ class CreateTableAttachments extends Migration
     public function up()
     {
         Schema::create('attachments', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 
             $table->string('path');
-            $table->integer('ticket_id')->unsigned()->nullable();
-            $table->integer('message_id')->unsigned()->nullable();
+            $table->bigInteger('ticket_id')->unsigned()->nullable();
+            $table->bigInteger('message_id')->unsigned()->nullable();
 
             $table->timestamps();
             $table->softDeletes();

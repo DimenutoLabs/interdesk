@@ -14,7 +14,7 @@ class TicketUserMigration extends Migration
     public function up()
     {
         Schema::create('ticket_user_migration', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->timestamps();
         });
     }

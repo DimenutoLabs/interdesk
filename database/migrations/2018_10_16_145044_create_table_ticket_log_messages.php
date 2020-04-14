@@ -14,10 +14,10 @@ class CreateTableTicketLogMessages extends Migration
     public function up()
     {
         Schema::create('ticket_log_messages', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 
-            $table->integer('ticket_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('ticket_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('ip', 15)->nullable();
             $table->text('message');
 
