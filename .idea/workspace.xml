@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee07d4da-70f1-4389-8239-c8e16c794d7e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/vendor/popper/popper.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/DummyCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/DummyCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/voyager-hooks.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/voyager.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_14_033131_add_column_should_display_on_user.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/editticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/editticket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tickets/form_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tickets/form_edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,11 +53,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/tickets/form_edit.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="164">
               <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Providers/AppServiceProvider.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+              <folding>
+                <element signature="e#33#72#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,6 +138,7 @@
         <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
         <option value="$PROJECT_DIR$/public/vendor/popper/popper.min.js" />
         <option value="$PROJECT_DIR$/resources/views/tickets/form_edit.blade.php" />
+        <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
       </list>
     </option>
   </component>
@@ -268,45 +274,13 @@
             <path>
               <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
               <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
               <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="popper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="layouts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="interdesk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="interdesk" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="tickets" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Providers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -381,7 +355,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19770000" />
+    <option name="totallyTimeSpent" value="20211000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
@@ -416,9 +390,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/scelLoad.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -684,6 +655,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Providers/AppServiceProvider.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+          <folding>
+            <element signature="e#33#72#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
