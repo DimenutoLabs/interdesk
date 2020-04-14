@@ -71,7 +71,7 @@ Route::group([
 });
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', function () {
     return redirect(route('dashboard'));

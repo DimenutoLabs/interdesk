@@ -64,12 +64,17 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="nav-link" href="{{ route('ticket.create') }}"><i class="fa fa-fw fa-plus-circle"></i> Novo Chamado</a>
+
+                                    @if (\Auth::user() != null && \Auth::user()->isAdmin())
+                                        <a class="dropdown-item" href="{{ route('ticket.create') }}"><i class="fa fa-fw fa-user-plus"></i> Usuário</a>
+                                    @endif
+
+                                    <a class="dropdown-item" href="{{ route('ticket.create') }}"><i class="fa fa-fw fa-comments-o"></i> Novo Chamado</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <i class="fa fa-fw fa-sign-out"></i> {{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -147,6 +152,7 @@
 
     $('.date').mask("00/00/0000", {clearIfNotMatch: true, placeholder: "__ /__ /____"});
     $('.time').mask("00:00", {clearIfNotMatch: true, placeholder: "__ : __"});
+    $('.cpf').mask("000.000.000-00", {clearIfNotMatch: true, placeholder: "___ . ___ . ___ - __"});
 
 
 

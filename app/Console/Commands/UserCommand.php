@@ -62,7 +62,7 @@ class UserCommand extends Command
         $user->is_admin = $this->adminQuestion();
         $user->name = $this->ask("What's the name of the user? (Ex.: Jhon Doe)");
         $user->email = $this->ask("Whats your email? (Ex.: user@provider.com)");
-        $user->password = Hash::make( $this->secret("Type the password of the user:") );
+        $user->password = Hash::make( $this->secret("Type the password of the user") );
         $user->email_verified_at = Carbon::now();
         $user->department_id = $this->departmentQuestion();
         $user->created_at = Carbon::now();
@@ -131,7 +131,7 @@ class UserCommand extends Command
     }
 
     private function cpfQuestion() : String {
-        $cpf = $this->ask("Digite o CPF: (Formato: 000.000.000-00)");
+        $cpf = $this->ask("Digite o CPF (Formato: 000.000.000-00)");
         if ( !preg_match("/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/", $cpf) ) {
             return $this->cpfQuestion();
         }
@@ -140,7 +140,7 @@ class UserCommand extends Command
     }
 
     private function nascimentoQuestion() : String {
-        $nascimento = $this->ask("Digite a data de nascimento: (Formato: 00/00/0000)");
+        $nascimento = $this->ask("Digite a data de nascimento (Formato: 00/00/0000)");
         if ( !preg_match("/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/", $nascimento) ) {
             return $this->nascimentoQuestion();
         }

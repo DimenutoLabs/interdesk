@@ -61,6 +61,35 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="cpf" class="col-md-4 col-form-label text-md-right">CPF</label>
+
+                            <div class="col-md-6">
+                                <input id="cpf" type="text" class="form-control cpf" name="cpf" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="nascimento" class="col-md-4 col-form-label text-md-right">Nascimento</label>
+
+                            <div class="col-md-6">
+                                <input id="nascimento" type="text" class="form-control date" name="nascimento" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="department" class="col-md-4 col-form-label text-md-right">Departamento</label>
+
+                            <div class="col-md-6">
+                                <select id="department" class="form-control selectpicker" name="department">
+                                    <option></option>
+                                    @foreach( $departments as $department )
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

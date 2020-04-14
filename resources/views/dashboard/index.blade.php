@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 d-flex">
                 <div class="card">
                     <div class="card-header">Bem Vindo</div>
                     <div class="card-body">
@@ -22,8 +22,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
+            <div class="col-md-4 d-flex">
+                <div class="card w-100">
                     <div class="card-header">Estatísticas</div>
                     <div class="card-body">
                         <span style="color: #77F">{{ count($tickets["openeds"]["byMe"]) + count($tickets["openeds"]["toMe"]) + count($tickets["openeds"]["observeds"]) + count($tickets["closeds"]["mine"]) }}</span> Chamados Totais

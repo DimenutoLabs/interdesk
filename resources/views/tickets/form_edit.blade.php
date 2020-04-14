@@ -223,7 +223,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-info" id="file-preview-button" style="color: #FFF"><i class="fa fa-fw fa-plus"></i> Selecionar</button>
+                                            <button type="button" class="btn btn-info" id="file-preview-button" style="color: #FFF"><i class="fa fa-fw fa-paperclip"></i> Anexar Arquivos</button>
                                         </div>
                                         <div class="col-12">
                                             <div class="row" id="file-preview-zone">
