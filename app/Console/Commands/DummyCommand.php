@@ -12,7 +12,6 @@ use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use TCG\Voyager\Models\Role;
 
 class DummyCommand extends Command
 {
@@ -58,7 +57,7 @@ class DummyCommand extends Command
             exit;
         }
 
-        $roles = $this->createRoles(5);
+//        $roles = $this->createRoles(5);
         $departments = $this->createDepartments(10);
         $users = $this->createUsers(30, $roles, $departments);
         $tickets = $this->createTickets(1000, $users, $departments);
@@ -101,10 +100,10 @@ class DummyCommand extends Command
         foreach( range(0,$ammount) as $i )
         {
             $user = new User;
-            $user->role_id = $this->faker->randomElement($roles)->id;
+//            $user->role_id = $this->faker->randomElement($roles)->id;
             $user->name = $this->faker->name();
             $user->email = $this->faker->safeEmail;
-            $user->avatar = "";
+//            $user->avatar = "";
             $user->is_admin = $this->faker->randomElement([true, false, false, false, false, false, false, false, false, false, false, false, false, false,]);
             $user->department_id = $this->faker->randomElement($departments)->id;
             $user->password = Hash::make(123456);

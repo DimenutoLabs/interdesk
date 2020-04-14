@@ -91,6 +91,7 @@
     <script src="{{ asset('vendor/jquery-mask-plugin/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('vendor/popper/popper.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
     <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
