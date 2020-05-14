@@ -15,7 +15,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if ( !$request->user()->isAdmin() ) {
+        if ( $request->user() == null || !$request->user()->isAdmin() ) {
             return redirect( route('dashboard') );
         }
         return $next($request);

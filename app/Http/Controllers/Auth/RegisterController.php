@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Department;
+use App\Models\UserExtraField;
+use App\Models\UserExtraFieldValue;
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -70,11 +74,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        DB::beginTransaction();
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'department_id' => $data['department']
+            'department_id' => $data['department'],
+            'email_verified_at' => Carbon::now(),
+            'should_display' => true,
         ]);
+
+        $cpf = UserExtraField::where('name', 'CPF')->first();
+        $nascimento = UserExtraField::where('name','Nascimento')->first();
+
+        UserExtraFieldValue::create([
+            'user_id' => $user->id,
+            'user_extra_field_id' => $cpf->id,
+            'value' => $data['cpf'],
+        ]);
+
+        UserExtraFieldValue::create([
+            'user_id' => $user->id,
+            'user_extra_field_id' => $nascimento->id,
+            'value' => $data['nascimento'],
+        ]);
+
+        DB::commit();
+
+        return $user;
     }
 }

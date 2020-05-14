@@ -56,6 +56,17 @@ class TicketController extends Controller
                             ->where('read', false)
                             ->get();
 
+
+        $message = __('messages.log_ticket_accessed');
+        $message = str_replace("{%0}", Request::user()->name . " (#" . Request::user()->id . ")", $message);
+        $log = new TicketLogMessage();
+        $log->message = $message;
+        $log->ticket_id = $ticket->id;
+        $log->user_id = Request::user()->id;
+        $log->ip = Request::ip();
+        $log->save();
+
+
         foreach( $notifications as $notification ) {
             $notification->read = true;
             $notification->save();

@@ -54,9 +54,6 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link btn btn-success" style="color: #FFF" href="{{ route('ticket.create') }}"><i class="fa fa-fw fa-plus-circle"></i> Novo Chamado</a>--}}
-{{--                            </li>--}}
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -66,7 +63,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                     @if (\Auth::user() != null && \Auth::user()->isAdmin())
-                                        <a class="dropdown-item" href="{{ route('ticket.create') }}"><i class="fa fa-fw fa-user-plus"></i> Usuário</a>
+                                        <a class="dropdown-item" href="{{ route('register') }}"><i class="fa fa-fw fa-user"></i> Usuários</a>
                                     @endif
 
                                     <a class="dropdown-item" href="{{ route('ticket.create') }}"><i class="fa fa-fw fa-comments-o"></i> Novo Chamado</a>
