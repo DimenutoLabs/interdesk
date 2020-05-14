@@ -95,7 +95,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         {{--<div class="">{{ $ticket->messages->last() ? $ticket->messages->last()->user->name : ""  }}</div>--}}
-                                        <div class="color-gray font-12 line-26">{{ $ticket->messages->last() ? $ticket->messages->last()->created_at->format('d/m/Y @ H:i') : ""  }}</div>
+                                        <div class="color-gray font-12 line-26">{{ $ticket->messages->last() ? $ticket->messages->last()->created_at->format('d/m/Y @ H:i') . "<br>" . $ticket->messages->last()->user->name : ""  }}</div>
                                     </div>
                                 </div>
                             </td>
